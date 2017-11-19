@@ -1,0 +1,34 @@
+/* Navbar */
+body {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.navbar {
+    margin-bottom: 20px;
+}
+
+.nav-tabs {
+    margin-bottom: 10px;
+}
+
+img.admin-image, .cart-image {
+    max-width: 100px;
+    max-height: 100px;
+}
+
+.out-of-stock {
+    background: cornsilk;
+}
+
+a.asc, a.desc, a.sortable {
+    text-decoration: none !important;
+}
+
+a.asc:after {
+    content: "\2193";
+}
+
+a.desc:after {
+    content: "\2191";
+}
