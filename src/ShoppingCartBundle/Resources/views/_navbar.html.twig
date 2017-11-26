@@ -18,14 +18,20 @@
                 {% endblock %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                {% block nav_user %}
-                    <li><a href="#"><span class="fa fa-sign-in"> Login</span></a></li>
-                    <li><a href="#"><span class="fa fa-user-plus"> Register</span></a></li>
-                    <li><a href="#"><span class="fa fa-user"> My Profile</span></a></li>
-                    <li><a href="#"><span class="fa fa-folder-open-o"> My products</span></a> </li>
-                    <li><a href="#"><span class="fa fa-shopping-cart"> Cart</span></a></li>
-                    <li><a href="#"><span class="fa fa-sign-out"> Logout</span></a></li>
-                {% endblock %}
+                {% if app.user %}
+                    {% block navbar_user %}
+                        <li><a href="{{ path('user_profile') }}"><span class="fa fa-user"> My Profile</span></a></li>
+                        <li><a href="#"><span class="fa fa-folder-open-o"> My products</span></a></li>
+                        <li><a href="#"><span class="fa fa-shopping-cart"> Cart</span></a></li>
+                        <li><a href="{{ path('security_logout') }}"><span class="fa fa-sign-out"> Logout</span></a></li>
+                    {% endblock %}
+                {% else %}
+                    {% block navbar_guest %}
+                        <li><a href="{{ path('security_login') }}"><span class="fa fa-sign-in"> Login</span></a></li>
+                        <li><a href="{{ path('user_register') }}"><span class="fa fa-user-plus"> Register</span></a>
+                        </li>
+                    {% endblock %}
+                {% endif %}
             </ul>
         </div>
     </div>

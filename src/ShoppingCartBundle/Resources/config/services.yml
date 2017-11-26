@@ -1,1 +1,14 @@
 services:
+    shopping_cart.security.login_form_authenticator:
+        class: ShoppingCartBundle\Security\LoginFormAuthenticator
+        autowire: true
+        calls:
+            - [createAuthenticatedToken, ['@security.user.provider.in_memory.user', '@?']]
+            - [getUser, ['@?', '@security.user.provider.ldap']]
+            - [checkCredentials, ['@?', '@security.user.provider.in_memory.user']]
+
+    shopping_cart.doctrine.hash_password_listener:
+        class: ShoppingCartBundle\Doctrine\HashPasswordListener
+        autowire: true
+        tags:
+            - { name: doctrine.event_subscriber }
