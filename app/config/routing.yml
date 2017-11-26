@@ -1,3 +1,4 @@
-app:
+shopping_cart:
     resource: '@ShoppingCartBundle/Controller/'
     type: annotation
+    prefix: /
