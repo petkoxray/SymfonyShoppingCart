@@ -52,12 +52,16 @@ class UserController extends Controller
 
         $form = $this->createForm(RegisterForm::class, $user);
         $form->handleRequest($request);
+
         if ($form->isValid()) {
             $user = $form->getData();
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
+
+            $this->container->get("session")->getFlashBag()
+                ->add("success", "You have successfully registered and logged in.");
 
             return $this->get("security.authentication.guard_handler")
                 ->authenticateUserAndHandleSuccess(

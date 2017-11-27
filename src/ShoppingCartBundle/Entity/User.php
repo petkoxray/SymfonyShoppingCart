@@ -70,24 +70,24 @@ class User implements UserInterface
         $this->funds = self::INITIAL_FUNDS;
     }
 
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
         return $this->email;
     }
 
-    public function getRoles()
+    public function getRoles(): array
     {
         return $this->roles->toArray();
     }
 
-    public function setRoles($roles)
+    public function setRoles($roles): User
     {
         $this->roles = $roles;
 
         return $this;
     }
 
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -96,76 +96,76 @@ class User implements UserInterface
     {
     }
 
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         $this->plainPassword = null;
     }
 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function setUsername($username)
+    public function setUsername($username): User
     {
         $this->email = $username;
 
         return $this;
     }
 
-    public function setPassword($password)
+    public function setPassword($password): void
     {
         $this->password = $password;
     }
 
-    public function getPlainPassword()
+    public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
     }
 
-    public function setPlainPassword($plainPassword)
+    public function setPlainPassword($plainPassword): void
     {
         $this->plainPassword = $plainPassword;
         $this->password = null;
     }
 
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    public function setEmail($email)
+    public function setEmail($email): User
     {
         $this->email = $email;
 
         return $this;
     }
 
-    public function getFullName()
+    public function getFullName(): ?string
     {
         return $this->fullName;
     }
 
-    public function setFullName($fullName)
+    public function setFullName($fullName): User
     {
         $this->fullName = $fullName;
 
         return $this;
     }
 
-    public function getFunds()
+    public function getFunds(): float
     {
         return $this->funds;
     }
 
-    public function setFunds($funds)
+    public function setFunds($funds): User
     {
         $this->funds = $funds;
 
         return $this;
     }
 
-    public function addRole(Role $role)
+    public function addRole(Role $role): void
     {
         $this->roles[] = $role;
     }

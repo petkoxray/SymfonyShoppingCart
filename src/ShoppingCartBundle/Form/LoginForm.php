@@ -10,7 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LoginForm extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add("_username", TextType::class)
@@ -21,7 +21,7 @@ class LoginForm extends AbstractType
     {
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'shopping_cart_bundle_login_form';
     }

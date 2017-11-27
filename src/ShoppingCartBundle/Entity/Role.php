@@ -45,7 +45,7 @@ class Role extends \Symfony\Component\Security\Core\Role\Role
         return $this->id;
     }
 
-    public function setName($name)
+    public function setName($name): Role
     {
         $this->name = $name;
 
@@ -57,12 +57,12 @@ class Role extends \Symfony\Component\Security\Core\Role\Role
         return $this->name;
     }
 
-    public function getUsers()
+    public function getUsers(): ArrayCollection
     {
         return $this->users;
     }
 
-    public function setUsers($users)
+    public function setUsers($users): Role
     {
         $this->users = $users;
 
