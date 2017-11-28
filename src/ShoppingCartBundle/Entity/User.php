@@ -87,7 +87,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -153,7 +153,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getFunds(): float
+    public function getFunds(): ?float
     {
         return $this->funds;
     }

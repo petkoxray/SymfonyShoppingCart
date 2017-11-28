@@ -5,6 +5,7 @@ namespace ShoppingCartBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use ShoppingCartBundle\Form\ProfileEditForm;
 use ShoppingCartBundle\Form\RegisterForm;
 use ShoppingCartBundle\Entity\Role;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -83,11 +84,37 @@ class UserController extends Controller
      */
     public function profileAction(): Response
     {
-        /** @var User $currentUser */
-        $currentUser = $this->getUser();
+        $user = $this->getUser();
 
         return $this->render("@ShoppingCart/users/profile.html.twig", [
-            "user" => $currentUser
+            "user" => $user
+        ]);
+    }
+
+    /**
+     * @Route("/profile/edit", name="user_profile_edit")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @param Request $request
+     * @return Response
+     */
+    public function profileEditAction(Request $request): Response
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(ProfileEditForm::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash("success", "Profile edited successfully!");
+
+            return $this->redirectToRoute("user_profile");
+        }
+
+        return $this->render('ShoppingCartBundle:users:edit.html.twig', [
+           "edit_form" => $form->createView()
         ]);
     }
 }
