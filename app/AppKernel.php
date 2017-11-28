@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             //Project bundles
             new ShoppingCartBundle\ShoppingCartBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 
         ];
 

@@ -1,3 +1,17 @@
+ShoppingCartBundle\Entity\Category:
+    Category_1:
+        name: Books
+    Category_2:
+        name: Games
+    Category_3:
+        name: Computers
+    Category_4:
+        name: Laptops
+    Category_5:
+        name: Phones
+    Category_6:
+        name: "Random Shits"
+
 ShoppingCartBundle\Entity\Role:
     role_1:
         __construct: false

@@ -14,7 +14,19 @@
 <div class="container">
     {% include "@ShoppingCart/_navbar.html.twig" %}
     {% include "@ShoppingCart/_messages.html.twig" %}
-    {% block body %}{% endblock %}
+    <div class="row">
+        <aside class="col-md-3">
+            {{ render(controller("ShoppingCartBundle:Category:sidebarCategories")) }}
+        </aside>
+        <main class="col-md-9">
+            {% block body %}{% endblock %}
+        </main>
+    </div>
+    {% block footer %}
+        <footer>
+            {% include "ShoppingCartBundle::_footer.html.twig" %}
+        </footer>
+    {% endblock %}
 </div>
 {% block javascripts %}
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
