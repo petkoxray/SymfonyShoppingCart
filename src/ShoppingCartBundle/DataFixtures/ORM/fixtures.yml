@@ -20,6 +20,7 @@ ShoppingCartBundle\Entity\Product:
     product_{1..100}:
         name: <firstname()> <lastName()>
         description: <paragraph()>
+        imageName: "iphone.jpg"
         quantity: <numberBetween(0, 299)>
         price: <randomFloat(2, 0.99, 499)>
         category: '@Category_*'

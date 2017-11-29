@@ -32,3 +32,8 @@ a.asc:after {
 a.desc:after {
     content: "\2191";
 }
+
+.rating > span:hover:before {
+    content: "\2605";
+    position: absolute;
+}

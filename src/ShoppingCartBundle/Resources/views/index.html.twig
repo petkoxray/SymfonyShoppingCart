@@ -2,8 +2,6 @@
 
 {% block body %}
     {% for product in products %}
-        <li class="list-group-item">
-            <a href="{{ product.category.slug }}/{{ product.slug }}">{{ product.name }}</a>
-        </li>
+        {% include "@ShoppingCart/products/_product_thumbnail.html.twig" %}
     {% endfor %}
 {% endblock %}

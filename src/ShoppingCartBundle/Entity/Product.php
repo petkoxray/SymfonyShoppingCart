@@ -47,20 +47,20 @@ class Product
      */
     private $quantity;
 
-//    /**
-//     * @var string $imageName
-//     *
-//     * @ORM\Column(type="string", length=255)
-//     */
-//    private $imageName;
-//    /**
-//     * @var File $imageFile
-//     *
-//     * @Vich\UploadableField(mapping="product_image", fileNameProperty="imageName")
-//     * @Assert\NotNull(groups={"NewProduct"}, message="You should upload a product image.")
-//     * @Assert\Image()
-//     */
-//    private $imageFile;
+    /**
+     * @var string $imageName
+     *
+     * @ORM\Column(type="string", length=255)
+     */
+    private $imageName;
+    /**
+     * @var File $imageFile
+     *
+     * @Vich\UploadableField(mapping="product_image", fileNameProperty="imageName")
+     * @Assert\NotNull(groups={"NewProduct"}, message="You should upload a product image.")
+     * @Assert\Image()
+     */
+    private $imageFile;
 
     /**
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
