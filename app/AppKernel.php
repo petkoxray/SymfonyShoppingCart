@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new ShoppingCartBundle\ShoppingCartBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new Vich\UploaderBundle\VichUploaderBundle()
 
         ];
 

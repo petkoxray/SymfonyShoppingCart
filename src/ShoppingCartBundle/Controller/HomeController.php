@@ -3,6 +3,7 @@
 namespace ShoppingCartBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use ShoppingCartBundle\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -13,6 +14,11 @@ class HomeController extends Controller
      */
     public function indexAction(): Response
     {
-        return $this->render('@ShoppingCart/index.html.twig');
+        $products = $this->getDoctrine()->getRepository(Product::class)
+            ->findAll();
+
+        return $this->render('@ShoppingCart/index.html.twig', [
+            'products' => $products
+        ]);
     }
 }

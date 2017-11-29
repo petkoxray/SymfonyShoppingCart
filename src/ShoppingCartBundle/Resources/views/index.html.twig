@@ -1,5 +1,9 @@
 {% extends "@ShoppingCart/base.html.twig" %}
 
-{% block body%}
-
+{% block body %}
+    {% for product in products %}
+        <li class="list-group-item">
+            <a href="{{ product.category.slug }}/{{ product.slug }}">{{ product.name }}</a>
+        </li>
+    {% endfor %}
 {% endblock %}

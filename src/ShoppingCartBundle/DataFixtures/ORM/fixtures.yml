@@ -11,6 +11,19 @@ ShoppingCartBundle\Entity\Category:
         name: Phones
     Category_6:
         name: "Random Shits"
+    Category_7:
+        name: "More random shits"
+    Category_8:
+        name: Others
+
+ShoppingCartBundle\Entity\Product:
+    product_{1..100}:
+        name: <firstname()> <lastName()>
+        description: <paragraph()>
+        quantity: <numberBetween(0, 299)>
+        price: <randomFloat(2, 0.99, 499)>
+        category: '@Category_*'
+        updatedAt: <datetime()>
 
 ShoppingCartBundle\Entity\Role:
     role_1:
@@ -29,13 +42,13 @@ ShoppingCartBundle\Entity\User:
         plainPassword: test
         fullName: Admin Adminov
         funds: <randomFloat(2, 50000, 100000)>
-        roles: ["@role_3", "@role_2"]
+        roles: ["@role_3", "@role_2", "@role_1"]
     user_2:
         email: editor@petkoxray.eu
         plainPassword: test
         fullName: "Editor Editorov"
         funds: <randomFloat(2, 1000, 2000)>
-        roles: ["@role_2"]
+        roles: ["@role_2", "@role_1"]
     user_{3..10}:
         email: <email()>
         fullName: <name()>

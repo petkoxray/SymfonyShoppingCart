@@ -18,6 +18,8 @@ class User implements UserInterface
     CONST INITIAL_FUNDS = 2499;
 
     /**
+     * @var integer $id
+     *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
@@ -25,6 +27,8 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @var string $email
+     *
      * @Assert\NotBlank()
      * @Assert\Email()
      * @ORM\Column(type="string", unique=true, length=255)
@@ -32,13 +36,17 @@ class User implements UserInterface
     private $email;
 
     /**
+     * @var string $fullName
+     *
      * @Assert\NotBlank()
      * @ORM\Column(type="string", length=255)
      */
     private $fullName;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2)
+     * @var double $funds
+     *
+     * @ORM\Column(type="decimal", precision=10, scale=2)
      * @Assert\Range(min="0", max="100000")
      */
     private $funds;
