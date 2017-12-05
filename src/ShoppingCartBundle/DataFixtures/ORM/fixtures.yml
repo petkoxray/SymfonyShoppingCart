@@ -10,17 +10,23 @@ ShoppingCartBundle\Entity\Category:
     Category_5:
         name: Phones
     Category_6:
-        name: "Random Shits"
+        name: Video
     Category_7:
-        name: "More random shits"
+        name: Audio
     Category_8:
         name: Others
+    Category_9:
+        name: Drones
+    Category_10:
+        name: "Washing Machines"
+    Category_11:
+        name: Toys
 
 ShoppingCartBundle\Entity\Product:
-    product_{1..100}:
+    product_{1..50}:
         name: <firstname()> <lastName()>
         description: <paragraph()>
-        imageName: "iphone.jpg"
+        imageName: "img<numberBetween(1, 16)>.jpg"
         quantity: <numberBetween(0, 299)>
         price: <randomFloat(2, 0.99, 499)>
         category: '@Category_*'
@@ -50,7 +56,13 @@ ShoppingCartBundle\Entity\User:
         fullName: "Editor Editorov"
         funds: <randomFloat(2, 1000, 2000)>
         roles: ["@role_2", "@role_1"]
-    user_{3..10}:
+    user_3:
+        email: user@petkoxray.eu
+        plainPassword: test
+        fullName: "User Userov"
+        funds: <randomFloat(2, 500, 100)>
+        roles: ["@role_1"]
+    user_{4..10}:
         email: <email()>
         fullName: <name()>
         plainPassword: 123
