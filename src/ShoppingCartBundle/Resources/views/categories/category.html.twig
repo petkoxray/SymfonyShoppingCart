@@ -4,6 +4,6 @@
     <h1>All products in {{ category.name }}</h1>
     <hr>
     {% for product in products %}
-        {% include "@ShoppingCart/products/_product_thumbnail.html.twig" %}
+        {% include "@ShoppingCart/_product_thumbnail.html.twig" %}
     {% endfor %}
 {% endblock %}

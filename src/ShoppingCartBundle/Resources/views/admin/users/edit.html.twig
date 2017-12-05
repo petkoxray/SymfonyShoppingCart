@@ -1,18 +1,22 @@
 {% extends "@ShoppingCart/base.html.twig" %}
 
 {% block body %}
+
     {{ form_start(edit_form) }}
 
+    {{ form_row(edit_form.email) }}
     {{ form_row(edit_form.fullName) }}
-
+    {{ form_row(edit_form.funds) }}
     {{ form_row(edit_form.plainPassword.first, {
         label: "New Password"
     }) }}
     {{ form_row(edit_form.plainPassword.second, {
-        label: "Repeat New Password"
+        label: "Repeate New Password"
     }) }}
-    <hr>
-    <button class="btn btn-success fa fa-thumbs-up" formnovalidate>Edit Profile</button>
+    {{ form_row(edit_form.roles) }}
+
+    <button class="btn btn-success pull-right fa fa-thumbs-up" formnovalidate>Edit User</button>
 
     {{ form_end(edit_form) }}
+
 {% endblock %}

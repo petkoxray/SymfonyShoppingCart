@@ -21,9 +21,9 @@
                 {% if app.user %}
                     {% block navbar_user %}
                         {% if is_granted('ROLE_ADMIN') %}
-                            <li><a href="/adminpanel"><span class="fa fa-user-secret"> Admin Panel</span></a></li>
+                            <li><a href="{{ path('admin_homepage') }}"><span class="fa fa-user-secret"> Admin Panel</span></a></li>
                         {% elseif is_granted('ROLE_EDITOR') %}
-                            <li><a href="/editorpanel"><span class="fa fa-floppy-o"> Editor Panel</span></a></li>
+                            <li><a href="{{ path('admin_homepage') }}"><span class="fa fa-floppy-o"> Editor Panel</span></a></li>
                         {% endif %}
                         <li><a href="{{ path('user_profile') }}"><span class="fa fa-user"> My Profile</span></a></li>
                         <li><a href="#"><span class="fa fa-folder-open-o"> My products</span></a></li>
