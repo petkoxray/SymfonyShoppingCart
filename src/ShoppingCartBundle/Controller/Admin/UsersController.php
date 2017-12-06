@@ -16,13 +16,14 @@ use Symfony\Component\HttpFoundation\Response;
  * Class UsersController
  * @package ShoppingCartBundle\Controller
  *
+ * @Route("/admin")
  * @Security("is_granted('ROLE_ADMIN')")
  */
 class UsersController extends Controller
 {
 
     /**
-     * @Route("/admin/users/all", name="admin_users_all")
+     * @Route("/users/all", name="admin_users_all")
      * @Method("GET")
      * @return Response
      */
@@ -36,7 +37,34 @@ class UsersController extends Controller
     }
 
     /**
-     * @Route("/admin/users/delete/{id}", name="admin_users_delete")
+     * @Route("/users/add", name="admin_users_add")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function addUserAction(Request $request): Response
+    {
+        $form = $this->createForm(UserAddEditForm::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash("success", "User {$user->getFullName()} added successfully!");
+
+            return $this->redirectToRoute('admin_users_all');
+        }
+
+        return $this->render('@ShoppingCart/admin/users/add.html.twig', [
+            "add_form" => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/users/delete/{id}", name="admin_users_delete")
      * @return Response
      */
     public function deleteUserAction(User $user): Response
@@ -50,7 +78,7 @@ class UsersController extends Controller
     }
 
     /**
-     * @Route("/admin/users/edit/{id}", name="admin_users_edit")
+     * @Route("/users/edit/{id}", name="admin_users_edit")
      *
      * @param Request $request
      * @param User $user

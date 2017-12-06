@@ -2,4 +2,14 @@
 
 {% block body %}
 
+    {{ form_start(add_form) }}
+
+    {{ form_row(add_form.name) }}
+
+    <button class="btn btn-success" formnovalidate>Edit <i
+                class="fa fa-plus-circle" aria-hidden="true"></i>
+    </button>
+
+    {{ form_end(add_form) }}
+
 {% endblock %}

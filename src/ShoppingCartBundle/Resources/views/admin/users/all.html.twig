@@ -6,7 +6,7 @@
     <table class="table table-responsive table-striped">
         <thead>
         <tr>
-            <th>Id</th>
+            <th>#Id</th>
             <th>Email</th>
             <th>Fullname</th>
             <th>Funds</th>
@@ -36,4 +36,9 @@
         {% endfor %}
         </tbody>
     </table>
+    <div class="text-right">
+        <a href="{{ path("admin_users_add") }}" class="btn btn-success">Add new User <i
+                    class="fa fa-plus-circle" aria-hidden="true"></i>
+        </a>
+    </div>
 {% endblock %}
