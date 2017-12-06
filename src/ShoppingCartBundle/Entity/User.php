@@ -72,9 +72,17 @@ class User implements UserInterface
      */
     private $roles;
 
+    /**
+     * @var Review[]|ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="ShoppingCartBundle\Entity\Review", mappedBy="author")
+     */
+    private $reviews;
+
     public function __construct()
     {
         $this->roles = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
         $this->funds = self::INITIAL_FUNDS;
     }
 

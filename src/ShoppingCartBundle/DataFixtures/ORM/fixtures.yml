@@ -68,3 +68,11 @@ ShoppingCartBundle\Entity\User:
         plainPassword: 123
         funds: <randomFloat(2, 200, 1000)>
         roles: ["@role_1"]
+
+ShoppingCartBundle\Entity\Review:
+    review_{1..100}:
+        body: <paragraph()>
+        rating: <numberBetween(1,5)>
+        date: <dateTimeBetween("-12 months", "now")>
+        author: "@user_*"
+        product: "@product_*"

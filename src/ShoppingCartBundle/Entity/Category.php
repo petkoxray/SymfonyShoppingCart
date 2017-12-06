@@ -41,7 +41,9 @@ class Category
     private $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity="Product", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="ShoppingCartBundle\Entity\Product", mappedBy="category",  fetch="EXTRA_LAZY")
+     *
+     * @var Product[]|ArrayCollection $products
      */
     private $products;
 

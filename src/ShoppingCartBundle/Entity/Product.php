@@ -2,6 +2,7 @@
 
 namespace ShoppingCartBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -63,8 +64,9 @@ class Product
     private $imageFile;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
+     * @ORM\ManyToOne(targetEntity="ShoppingCartBundle\Entity\Category", inversedBy="products",  fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * @Assert\NotBlank()
      */
     private $category;
 
@@ -86,11 +88,23 @@ class Product
     private $slug;
 
     /**
+     * @var Review[]|ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="ShoppingCartBundle\Entity\Review", mappedBy="product")
+     */
+    private $reviews;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime")
      */
     private $updatedAt;
+
+    public function __construct()
+    {
+        $this->reviews = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -159,7 +173,7 @@ class Product
     /**
      * @return mixed
      */
-    public function getCategory()
+    public function getCategory(): Category
     {
         return $this->category;
     }
@@ -250,5 +264,21 @@ class Product
     public function setImageFile($imageFile)
     {
         $this->imageFile = $imageFile;
+    }
+
+    /**
+     * @return ArrayCollection|Review[]
+     */
+    public function getReviews()
+    {
+        return $this->reviews;
+    }
+
+    /**
+     * @param ArrayCollection|Review[] $reviews
+     */
+    public function setReviews($reviews)
+    {
+        $this->reviews = $reviews;
     }
 }

@@ -1,0 +1,47 @@
+{% extends "@ShoppingCart/base.html.twig" %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <img src="{{ vich_uploader_asset(product, "imageFile") }}" alt="{{ product.name }}">
+            </div>
+        </div>
+        <div class="col-md-8">
+            <h2>Description:</h2>
+            <p>{{ product.description }}</p>
+            <p>Category: <a
+                        href="{{ path("show_products_by_category", {"slug": product.category.slug}) }}">{{ product.category.name }}</a>
+            </p>
+            <p>In stock: <strong>{{ product.quantity }}</strong></p>
+            <div class="h2">
+                Price:
+                <span class="label label-success">€{{ product.price }}</span>
+            </div>
+            <hr>
+        </div>
+    </div>
+    <hr>
+    <h2>Reviews</h2>
+    {% if product.reviews|length > 0 %}
+        <p>Write review</p>
+        {% for review in product.reviews %}
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <strong>{{ review.author.fullName }} ({{ review.author.email }})</strong>
+                    Rating: {{ review.rating|raw }}
+                </div>
+                <div class="panel-body">
+                    {{ review.body }}
+                </div>
+                <div class="panel-footer">
+                    Posted on: {{ review.date|date }}
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Write first review:</p>
+    {% endif %}
+
+    <hr>
+{% endblock %}
