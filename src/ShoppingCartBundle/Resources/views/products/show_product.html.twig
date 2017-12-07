@@ -22,14 +22,19 @@
         </div>
     </div>
     <hr>
-    <h2>Reviews</h2>
+    <h1>Reviews</h1>
     {% if product.reviews|length > 0 %}
-        <p>Write review</p>
         {% for review in product.reviews %}
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <strong>{{ review.author.fullName }} ({{ review.author.email }})</strong>
                     Rating: {{ review.rating|raw }}
+                    {% if (app.user and (review.author.id == app.user.id)) %}
+                        <form method="post" action="{{ path('product_delete_review', {"id": review.id}) }}"
+                              class="pull-right">
+                            <button type="submit" class="btn btn-xs btn-danger">Delete</button>
+                        </form>
+                    {% endif %}
                 </div>
                 <div class="panel-body">
                     {{ review.body }}
@@ -40,8 +45,12 @@
             </div>
         {% endfor %}
     {% else %}
-        <p>Write first review:</p>
+        <span>You have the chance to write the first review :)</span>
     {% endif %}
-
     <hr>
+    {{ form_start(review_add, {'action': path('product_add_review', {'slug': product.slug}), 'method': 'POST'}) }}
+    {{ form_row(review_add.body) }}
+    {{ form_row(review_add.rating) }}
+    <button type="submit" class="btn btn-success" formnovalidate>Add Review</button>
+    {{ form_end(review_add) }}
 {% endblock %}

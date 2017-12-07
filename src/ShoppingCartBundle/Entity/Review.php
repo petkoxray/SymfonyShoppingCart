@@ -29,7 +29,7 @@ class Review
     /**
      * @var integer $rating
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
      * @Assert\NotBlank()
      * @Assert\Range(min="1", max="5")
      */
@@ -72,7 +72,7 @@ class Review
     /**
      * @return mixed
      */
-    public function getBody()
+    public function getBody(): ?string
     {
         return $this->body;
     }
@@ -88,7 +88,7 @@ class Review
     /**
      * @return integer
      */
-    public function getRating(): int
+    public function getRating(): ?int
     {
         return $this->rating;
     }
