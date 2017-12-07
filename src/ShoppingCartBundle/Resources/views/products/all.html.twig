@@ -1,0 +1,20 @@
+{% extends "@ShoppingCart/base.html.twig" %}
+
+{% block body %}
+    {% if products|length > 0 %}
+        <div class="row">
+        {% for index,product in products %}
+            {% if index % 3 == 0 and index > 0 %}
+                </div>
+                <div class="row">
+            {% endif %}
+                {% include "@ShoppingCart/_product_thumbnail.html.twig" with {"product": product, "index": index} %}
+        {% endfor %}
+        </div>
+        <div class="navigation text-center">
+            {{ knp_pagination_render(products) }}
+        </div>
+    {% else %}
+        <h2 class="text-center">Sorry, there is no products right now!</h2>
+    {% endif %}
+{% endblock %}

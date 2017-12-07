@@ -15,7 +15,7 @@ class CategoryController extends Controller
     {
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
 
-        return $this->render('@ShoppingCart/_sidebar.html.twig', [
+        return $this->render('@ShoppingCart/_sidebar_categories.html.twig', [
             "categories" => $categories
         ]);
     }

@@ -19,6 +19,28 @@ use Symfony\Component\HttpFoundation\Response;
 class ProductController extends Controller
 {
     /**
+     * @Route("/products", name="products_all")
+     * @Method("GET")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function allProductsAction(Request $request): Response
+    {
+        $paginator  = $this->get('knp_paginator');
+        $products = $paginator->paginate(
+            $this->getDoctrine()->getRepository(Product::class)
+                ->findByQueryBuilder(),
+            $request->query->getInt('page', 1),
+            9
+        );
+
+        return $this->render('@ShoppingCart/products/all.html.twig', [
+            "products" => $products
+        ]);
+    }
+
+    /**
      * @Route("/products/{slug}", name="product_show")
      * @Method("GET")
      *
