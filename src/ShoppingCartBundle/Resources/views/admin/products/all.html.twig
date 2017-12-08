@@ -1,61 +1,63 @@
 {% extends "@ShoppingCart/base.html.twig" %}
 
 {% block body %}
-    {#<p class="text-right">#}
-        {#<a href="{{ path("admin_add_product") }}" class="btn btn-success">Add new product <span#}
-                    {#class="glyphicon glyphicon-plus-sign"></span></a>#}
-    {#</p>#}
-    {#<hr>#}
-    {#<table class="table table-responsive table-striped">#}
-        {#<thead>#}
-        {#<tr>#}
-            {#<th>{{ knp_pagination_sortable(products, '#id', 'product.id') }}</th>#}
-            {#<th>Image</th>#}
-            {#<th>{{ knp_pagination_sortable(products, 'Name', 'product.name') }}</th>#}
-            {#<th>Description</th>#}
-            {#<th>Category</th>#}
-            {#<th>{{ knp_pagination_sortable(products, 'Quantity', 'product.quantity') }}</th>#}
-            {#<th>{{ knp_pagination_sortable(products, 'Price', 'product.price') }}</th>#}
-            {#<th>Edit</th>#}
-            {#<th>Delete</th>#}
-        {#</tr>#}
-        {#</thead>#}
-        {#<tbody>#}
-        {#{% if products|length > 0 %}#}
-            {#{% for product in products %}#}
-                {#<tr>#}
-                    {#<td>{{ product.id }}</td>#}
-                    {#<td><img src="{{ vich_uploader_asset(product, "imageFile") }}" class="admin-image"#}
-                             {#alt="Product Image"></td>#}
-                    {#<td>#}
-                        {#<a href="{{ path("products_view_product", {"slug": product.slug}) }}">#}
-                            {#{{ product.name }}#}
-                        {#</a>#}
-                    {#</td>#}
-                    {#<td>{{ product.description }}</td>#}
-                    {#<td>{{ product.category }}</td>#}
-                    {#<td>{{ product.quantity }}</td>#}
-                    {#<td>#}
-                        {#{% if product.hasActivePromotion %}#}
-                            {#<s>{{ product.originalPrice|number_format(2) }}</s>#}
-                            {#<span class="text-danger"><strong>{{ product.price|number_format(2) }}</strong></span>#}
-                        {#{% else %}#}
-                            {#{{ product.price|number_format(2) }}#}
-                        {#{% endif %}#}
-                    {#</td>#}
-                    {#<td>#}
-                        {#<a href="{{ path("admin_edit_product", {"slug": product.slug}) }}"#}
-                           {#class="btn btn-warning">Edit</a>#}
-                    {#</td>#}
-                    {#<td>#}
-                        {#<form action="{{ path("admin_delete_product", {"slug": product.slug}) }}" method="post">#}
-                            {#<button class="btn btn-danger delete-item" type="submit">Delete</button>#}
-                        {#</form>#}
-                    {#</td>#}
-                {#</tr>#}
-            {#{% endfor %}#}
-        {#{% endif %}#}
-        {#</tbody>#}
-    {#</table>#}
+    <h2 class="text-left">All products</h2>
+    <p class="text-right">
+        <a href="{{ path("admin_products_add") }}" class="btn btn-success">Add new product <i
+                    class="fa fa-plus-circle" aria-hidden="true"></i></a>
+    </p>
+    <hr>
+    <table class="table table-responsive table-striped">
+        <thead>
+        <tr>
+            <th>{{ knp_pagination_sortable(products, '#id', 'product.id') }}</th>
+            <th>Image</th>
+            <th>{{ knp_pagination_sortable(products, 'Name', 'product.name') }}</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>{{ knp_pagination_sortable(products, 'Quantity', 'product.quantity') }}</th>
+            <th>{{ knp_pagination_sortable(products, 'Price', 'product.price') }}</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if products|length > 0 %}
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.id }}</td>
+                    <td><img src="{{ vich_uploader_asset(product, "imageFile") }}" class="admin-image"
+                             alt="Product Image"></td>
+                    <td>
+                        <a href="{{ path("product_show", {"slug": product.slug}) }}">
+                            {{ product.name }}
+                        </a>
+                    </td>
+                    <td>{{ product.description }}</td>
+                    <td>
+                        <a href="{{ path('show_products_by_category', {"slug": product.category.slug}) }}"> {{ product.category.name }}</a>
+                    </td>
+                    <td>{{ product.quantity }}</td>
+                    <td>
+                        {{ product.price|number_format(2) }}
+                    </td>
+                    <td>
+                        <a href="{{ path("admin_products_edit", {"slug": product.slug}) }}"
+                           class="btn btn-warning">Edit</a>
+                    </td>
+                    <td>
+                        <form action="{{ path("admin_products_delete", {"slug": product.slug}) }}" method="post">
+                            <button class="btn btn-danger delete-item" type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+
+    <div class="navigation text-center">
+        {{ knp_pagination_render(products) }}
+    </div>
 
 {% endblock %}

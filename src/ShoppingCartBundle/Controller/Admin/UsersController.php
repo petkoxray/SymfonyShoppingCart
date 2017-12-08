@@ -92,7 +92,6 @@ class UsersController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
             $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
             $em->flush();
 
             $this->addFlash("success", "User {$user->getFullName()} edited successfully!");

@@ -65,7 +65,7 @@ class Product
 
     /**
      * @ORM\ManyToOne(targetEntity="ShoppingCartBundle\Entity\Category", inversedBy="products",  fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="CASCADE")
      * @Assert\NotBlank()
      */
     private $category;
@@ -104,6 +104,7 @@ class Product
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
+        $this->updatedAt = new \DateTime();
     }
 
     /**
@@ -173,7 +174,7 @@ class Product
     /**
      * @return mixed
      */
-    public function getCategory(): Category
+    public function getCategory(): ?Category
     {
         return $this->category;
     }
@@ -245,7 +246,7 @@ class Product
     /**
      * @param string $imageName
      */
-    public function setImageName(string $imageName)
+    public function setImageName($imageName)
     {
         $this->imageName = $imageName;
     }

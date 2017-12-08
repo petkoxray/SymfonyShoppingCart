@@ -46,13 +46,15 @@ class Review
      * @var Product $product
      *
      * @ORM\ManyToOne(targetEntity="ShoppingCartBundle\Entity\Product", inversedBy="reviews")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $product;
 
     /**
      * @var User $author
      *
-     * @ORM\ManyToOne(targetEntity="ShoppingCartBundle\Entity\User", inversedBy="reviews")*
+     * @ORM\ManyToOne(targetEntity="ShoppingCartBundle\Entity\User", inversedBy="reviews")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $author;
 
