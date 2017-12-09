@@ -2,6 +2,11 @@
 
 {% block body %}
     <h1>Users</h1>
+    <div class="text-right">
+        <a href="{{ path("admin_users_add") }}" class="btn btn-success">Add new User <i
+                    class="fa fa-plus-circle" aria-hidden="true"></i>
+        </a>
+    </div>
     <hr>
     <table class="table table-responsive table-striped">
         <thead>
@@ -29,16 +34,12 @@
                 </td>
                 <td>
                     <form action="{{ path("admin_users_delete", {"id": user.id}) }}" method="post">
-                        <button class="btn btn-danger delete-item" type="submit">Delete</button>
+                        <button class="btn btn-danger delete-item" type="submit"><i class="fa fa-trash-o"></i>
+                            Delete</button>
                     </form>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-    <div class="text-right">
-        <a href="{{ path("admin_users_add") }}" class="btn btn-success">Add new User <i
-                    class="fa fa-plus-circle" aria-hidden="true"></i>
-        </a>
-    </div>
 {% endblock %}

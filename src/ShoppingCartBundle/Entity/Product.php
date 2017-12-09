@@ -282,4 +282,19 @@ class Product
     {
         $this->reviews = $reviews;
     }
+
+    public function getAverageRating()
+    {
+        if (count($this->getReviews()) > 0) {
+            $sum = array_reduce($this->getReviews()->toArray(), function ($sum, Review $review) {
+                $sum += $review->getRating();
+
+                return $sum;
+            });
+
+            return floor($sum / count($this->getReviews()));
+        }
+
+        return 0;
+    }
 }

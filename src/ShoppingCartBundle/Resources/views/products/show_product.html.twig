@@ -5,6 +5,7 @@
         <div class="col-md-4">
             <div class="thumbnail">
                 <img src="{{ vich_uploader_asset(product, "imageFile") }}" alt="{{ product.name }}">
+                <p class="text-center">{{ product.averageRating|starsAverageRating|raw }}</p>
             </div>
         </div>
         <div class="col-md-8">
@@ -28,11 +29,12 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <strong>{{ review.author.fullName }} ({{ review.author.email }})</strong>
-                    Rating: {{ review.rating|raw }}
+                    {{ review.rating|starsRating|raw }}
                     {% if (app.user and (review.author.id == app.user.id)) %}
                         <form method="post" action="{{ path('product_delete_review', {"id": review.id}) }}"
                               class="pull-right">
-                            <button type="submit" class="btn btn-xs btn-danger">Delete</button>
+                            <button type="submit" class="btn btn-xs btn-danger"><i class="fa fa-trash-o"></i> Delete
+                            </button>
                         </form>
                     {% endif %}
                 </div>
