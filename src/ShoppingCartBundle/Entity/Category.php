@@ -16,7 +16,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class Category
 {
     /**
-     * @var integer $id
+     * @var int $id
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -41,9 +41,9 @@ class Category
     private $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity="ShoppingCartBundle\Entity\Product", mappedBy="category",  fetch="EXTRA_LAZY")
-     *
      * @var Product[]|ArrayCollection $products
+     *
+     * @ORM\OneToMany(targetEntity="ShoppingCartBundle\Entity\Product", mappedBy="category",  fetch="EXTRA_LAZY")
      */
     private $products;
 
@@ -55,11 +55,6 @@ class Category
     public function getId()
     {
         return $this->id;
-    }
-
-    public function setId($id)
-    {
-        $this->id = $id;
     }
 
     public function getName()
@@ -82,17 +77,11 @@ class Category
         $this->slug = $slug;
     }
 
-    /**
-     * @return mixed
-     */
     public function getProducts()
     {
         return $this->products;
     }
 
-    /**
-     * @param mixed $products
-     */
     public function setProducts($products)
     {
         $this->products = $products;

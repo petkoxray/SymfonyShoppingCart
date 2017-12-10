@@ -18,7 +18,7 @@ class User implements UserInterface
     CONST INITIAL_FUNDS = 2499;
 
     /**
-     * @var integer $id
+     * @var int $id
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -52,6 +52,8 @@ class User implements UserInterface
     private $funds;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255)
      */
     private $password;

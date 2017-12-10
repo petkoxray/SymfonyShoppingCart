@@ -17,7 +17,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 class Product
 {
     /**
-     * @var integer $id
+     * @var int $id
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -42,6 +42,8 @@ class Product
     private $description;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="integer")
      * @Assert\NotBlank()
      * @Assert\Range(min="0", max="5000")
@@ -99,145 +101,89 @@ class Product
      *
      * @ORM\Column(type="datetime")
      */
-    private $updatedAt;
+    private $createdAt;
 
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
-        $this->updatedAt = new \DateTime();
+        $this->createdAt = new \DateTime();
     }
 
-    /**
-     * @return mixed
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param mixed $name
-     */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
     }
 
-    /**
-     * @return mixed
-     */
     public function getDescription()
     {
         return $this->description;
     }
 
-    /**
-     * @param mixed $description
-     */
     public function setDescription($description)
     {
         $this->description = $description;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getQuantity()
+    public function getQuantity(): ?int
     {
         return $this->quantity;
     }
 
-    /**
-     * @param mixed $quantity
-     */
     public function setQuantity($quantity)
     {
         $this->quantity = $quantity;
     }
 
-    /**
-     * @return mixed
-     */
     public function getCategory(): ?Category
     {
         return $this->category;
     }
 
-    /**
-     * @param mixed $category
-     */
     public function setCategory($category)
     {
         $this->category = $category;
     }
 
-    /**
-     * @return mixed
-     */
     public function getPrice()
     {
         return $this->price;
     }
 
-    /**
-     * @param mixed $price
-     */
     public function setPrice($price)
     {
         $this->price = $price;
     }
 
-    /**
-     * @return mixed
-     */
     public function getSlug()
     {
         return $this->slug;
     }
 
-    /**
-     * @param mixed $slug
-     */
     public function setSlug($slug)
     {
         $this->slug = $slug;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getUpdatedAt(): \DateTime
+    public function getCreatedAt(): \DateTime
     {
-        return $this->updatedAt;
+        return $this->createdAt;
     }
 
-    /**
-     * @param \DateTime $updatedAt
-     */
-    public function setUpdatedAt(\DateTime $updatedAt)
+    public function setCreatedAt(\DateTime $createdAt)
     {
-        $this->updatedAt = $updatedAt;
+        $this->createdAt = $createdAt;
     }
 
-    /**
-     * @return string
-     */
     public function getImageName(): string
     {
         return $this->imageName;
@@ -251,17 +197,11 @@ class Product
         $this->imageName = $imageName;
     }
 
-    /**
-     * @return mixed
-     */
     public function getImageFile()
     {
         return $this->imageFile;
     }
 
-    /**
-     * @param mixed $imageFile
-     */
     public function setImageFile($imageFile)
     {
         $this->imageFile = $imageFile;
@@ -283,7 +223,7 @@ class Product
         $this->reviews = $reviews;
     }
 
-    public function getAverageRating()
+    public function getAverageRating(): int
     {
         if (count($this->getReviews()) > 0) {
             $sum = array_reduce($this->getReviews()->toArray(), function ($sum, Review $review) {

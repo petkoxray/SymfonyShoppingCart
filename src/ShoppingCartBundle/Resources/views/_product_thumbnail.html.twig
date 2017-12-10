@@ -4,7 +4,7 @@
         <img class="img-responsive center-block" src="{{ vich_uploader_asset(product, "imageFile") }}" alt="{{ product.name }}">
         <div class="caption">
             <div class="text-center">
-                {{ product.averageRating|starsAverageRating|raw }}
+                {{ product.averageRating|starsRating|raw }}
             </div>
             <hr>
             <p><strong>Quantity available: {{ product.quantity }}</strong></p>

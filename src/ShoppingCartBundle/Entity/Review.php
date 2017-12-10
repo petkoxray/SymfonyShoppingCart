@@ -12,6 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Review
 {
     /**
+     * @var int
+     *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
@@ -27,7 +29,7 @@ class Review
     private $body;
 
     /**
-     * @var integer $rating
+     * @var int $rating
      *
      * @ORM\Column(type="integer", nullable=false)
      * @Assert\NotBlank()
@@ -103,17 +105,11 @@ class Review
         $this->rating = $rating;
     }
 
-    /**
-     * @return mixed
-     */
     public function getDate()
     {
         return $this->date;
     }
 
-    /**
-     * @param mixed $date
-     */
     public function setDate($date)
     {
         $this->date = $date;

@@ -4,11 +4,12 @@
 
     {% if is_granted('ROLE_ADMIN') %}
         <h1>Admin Panel</h1>
-        <a href="{{ path('admin_users_all') }}" type="button" class="fa fa-users fa-lg btn btn-info btn-lg btn-block"> Edit Users</a>
+        <a href="{{ path('admin_users_all') }}" type="button" class="fa fa-users fa-lg btn btn-info btn-lg btn-block"> Manage Users</a>
         <hr>
     {% endif %}
         <h1>Editor Panel</h1>
-    <a href="{{ path('admin_categories_all') }}" type="button" class="fa fa-window-restore fa-lg btn btn-info btn-lg btn-block"> Edit Categories</a>
-    <a href="{{ path('admin_products_all') }}" type="button" class="fa fa-briefcase fa-lg btn btn-info btn-lg btn-block"> Edit Products</a>
+    <a href="{{ path('admin_categories_all') }}" type="button" class="fa fa-window-restore fa-lg btn btn-info btn-lg btn-block"> Manage Categories</a>
+    <a href="{{ path('admin_products_all') }}" type="button" class="fa fa-briefcase fa-lg btn btn-info btn-lg btn-block"> Manage Products</a>
+    <a href="{{ path('admin_promotions_all') }}" type="button" class="fa fa-percent fa-lg btn btn-info btn-lg btn-block"> Manage Promotions</a>
 
 {% endblock %}

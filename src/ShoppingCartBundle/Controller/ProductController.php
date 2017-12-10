@@ -30,7 +30,7 @@ class ProductController extends Controller
         $paginator  = $this->get('knp_paginator');
         $products = $paginator->paginate(
             $this->getDoctrine()->getRepository(Product::class)
-                ->findByQueryBuilder(),
+                ->findAllByQueryBuilder(),
             $request->query->getInt('page', 1),
             9
         );

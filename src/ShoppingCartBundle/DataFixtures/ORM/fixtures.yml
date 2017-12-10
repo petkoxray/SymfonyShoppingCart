@@ -30,7 +30,7 @@ ShoppingCartBundle\Entity\Product:
         quantity: <numberBetween(0, 299)>
         price: <randomFloat(2, 0.99, 499)>
         category: '@Category_*'
-        updatedAt: <datetime()>
+        createdAt: <datetime()>
 
 ShoppingCartBundle\Entity\Role:
     role_1:
