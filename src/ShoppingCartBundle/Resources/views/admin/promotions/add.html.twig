@@ -1,5 +1,16 @@
 {% extends "@ShoppingCart/base.html.twig" %}
 
 {% block body %}
+    {{ form_start(add_form) }}
 
+    {{ form_row(add_form.name) }}
+    {{ form_row(add_form.discount) }}
+    {{ form_row(add_form.startDate) }}
+    {{ form_row(add_form.endDate) }}
+
+    <button class="btn btn-success" formnovalidate>Add <i
+                class="fa fa-plus-circle" aria-hidden="true"></i>
+    </button>
+
+    {{ form_end(add_form) }}
 {% endblock %}

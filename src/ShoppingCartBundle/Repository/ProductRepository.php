@@ -3,18 +3,19 @@
 namespace ShoppingCartBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use ShoppingCartBundle\Entity\Category;
 
 class ProductRepository extends EntityRepository
 {
-    public function findAllByQueryBuilder()
+    public function findAllByQueryBuilder(): QueryBuilder
     {
         return $this->createQueryBuilder("product")
             ->where("product.quantity > 0")
             ->orderBy("product.id", "desc");
     }
 
-    public function findLastProducts(int $productsCount)
+    public function findLastProducts(int $productsCount): array
     {
         return $this->createQueryBuilder("product")
             ->where("product.quantity > 0")
@@ -24,7 +25,7 @@ class ProductRepository extends EntityRepository
             ->execute();
     }
 
-    public function findAllbyCategoryQueryBuilder(Category $category)
+    public function findAllbyCategoryQueryBuilder(Category $category): QueryBuilder
     {
         return $this->createQueryBuilder("product")
             ->where("product.quantity > 0")

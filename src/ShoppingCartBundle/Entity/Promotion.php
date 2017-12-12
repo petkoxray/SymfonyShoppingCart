@@ -73,7 +73,7 @@ class Promotion
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -89,7 +89,7 @@ class Promotion
     /**
      * @return int
      */
-    public function getDiscount(): int
+    public function getDiscount(): ?int
     {
         return $this->discount;
     }
@@ -105,7 +105,7 @@ class Promotion
     /**
      * @return \DateTime
      */
-    public function getStartDate(): \DateTime
+    public function getStartDate(): ?\DateTime
     {
         return $this->startDate;
     }
@@ -121,7 +121,7 @@ class Promotion
     /**
      * @return \DateTime
      */
-    public function getEndDate(): \DateTime
+    public function getEndDate(): ?\DateTime
     {
         return $this->endDate;
     }
