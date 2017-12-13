@@ -11,9 +11,10 @@
         label: "New Password"
     }) }}
     {{ form_row(edit_form.plainPassword.second, {
-        label: "Repeate New Password"
+        label: "Repeat New Password"
     }) }}
     {{ form_row(edit_form.roles) }}
+    {{ form_row(edit_form.isBanned)}}
 
     <button class="btn btn-success pull-right fa fa-thumbs-up" formnovalidate>Edit User</button>
 

@@ -5,6 +5,7 @@ namespace ShoppingCartBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -13,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="user")
  * @UniqueEntity(fields={"email"}, message="This email address is already taken by another user.")
  */
-class User implements UserInterface
+class User implements UserInterface, AdvancedUserInterface
 {
     CONST INITIAL_FUNDS = 2499;
 
@@ -81,10 +82,18 @@ class User implements UserInterface
      */
     private $reviews;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $isBanned;
+
     public function __construct()
     {
         $this->roles = new ArrayCollection();
         $this->reviews = new ArrayCollection();
+        $this->isBanned = false;
         $this->funds = self::INITIAL_FUNDS;
     }
 
@@ -186,5 +195,35 @@ class User implements UserInterface
     public function addRole(Role $role): void
     {
         $this->roles[] = $role;
+    }
+
+    public function isAccountNonExpired(): bool
+    {
+        return true;
+    }
+
+    public function isAccountNonLocked(): bool
+    {
+        return !$this->isBanned;
+    }
+
+    public function isCredentialsNonExpired(): bool
+    {
+        return true;
+    }
+
+    public function isEnabled(): bool
+    {
+        return !$this->isBanned();
+    }
+
+    public function isBanned(): bool
+    {
+        return $this->isBanned;
+    }
+
+    public function setIsBanned(bool $isBanned)
+    {
+        $this->isBanned = $isBanned;
     }
 }

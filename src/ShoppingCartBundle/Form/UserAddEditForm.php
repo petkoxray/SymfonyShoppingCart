@@ -5,6 +5,8 @@ namespace ShoppingCartBundle\Form;
 use ShoppingCartBundle\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -23,6 +25,13 @@ class UserAddEditForm extends AbstractType
                 "multiple" => true,
                 "expanded" => true
             ])
+            ->add("isBanned",  ChoiceType::class, [
+                'choices' => [
+                    'No' => false,
+                    'Yes' => true
+                ],
+                'label' => 'Is user account locked/banned?',
+                'required' => true])
             ->add("plainPassword", RepeatedType::class, [
                 "type" => PasswordType::class,
                 "invalid_message" => "Passwords does not match!"
