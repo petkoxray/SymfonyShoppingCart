@@ -68,15 +68,15 @@ class Review
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getBody(): ?string
+    public function getBody()
     {
         return $this->body;
     }
@@ -84,32 +84,38 @@ class Review
     /**
      * @param string $body
      */
-    public function setBody(string $body)
+    public function setBody($body)
     {
         $this->body = $body;
     }
 
     /**
-     * @return integer
+     * @return int
      */
-    public function getRating(): ?int
+    public function getRating()
     {
         return $this->rating;
     }
 
     /**
-     * @param integer $rating
+     * @param int $rating
      */
-    public function setRating(int $rating)
+    public function setRating($rating)
     {
         $this->rating = $rating;
     }
 
+    /**
+     * @return \DateTime
+     */
     public function getDate()
     {
         return $this->date;
     }
 
+    /**
+     * @param \DateTime $date
+     */
     public function setDate($date)
     {
         $this->date = $date;
@@ -118,7 +124,7 @@ class Review
     /**
      * @return Product
      */
-    public function getProduct(): Product
+    public function getProduct()
     {
         return $this->product;
     }
@@ -134,7 +140,7 @@ class Review
     /**
      * @return User
      */
-    public function getAuthor(): User
+    public function getAuthor()
     {
         return $this->author;
     }
@@ -142,7 +148,7 @@ class Review
     /**
      * @param User $author
      */
-    public function setAuthor(User $author)
+    public function setAuthor($author)
     {
         $this->author = $author;
     }

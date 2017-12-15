@@ -2,7 +2,7 @@
 
 namespace ShoppingCartBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use     Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -52,41 +52,65 @@ class Category
         $this->products = new ArrayCollection();
     }
 
+    /**
+     * @return int
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * @param string $name
+     */
     public function setName($name)
     {
         $this->name = $name;
     }
 
+    /**
+     * @return string
+     */
     public function getSlug()
     {
         return $this->slug;
     }
 
+    /**
+     * @param string $slug
+     */
     public function setSlug($slug)
     {
         $this->slug = $slug;
     }
 
+    /**
+     * @return ArrayCollection|Product[]
+     */
     public function getProducts()
     {
         return $this->products;
     }
 
+    /**
+     * @param ArrayCollection|Product[] $products
+     */
     public function setProducts($products)
     {
         $this->products = $products;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->getName();

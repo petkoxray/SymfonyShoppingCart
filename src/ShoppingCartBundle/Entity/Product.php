@@ -28,7 +28,7 @@ class Product
     /**
      * @var string $name
      *
-     * @ORM\Column(type="string", unique=false)
+     * @ORM\Column(type="string", unique=false, length=255)
      * @Assert\NotBlank()
      */
     private $name;
@@ -54,6 +54,7 @@ class Product
      * @var string $imageName
      *
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $imageName;
     /**
@@ -61,6 +62,7 @@ class Product
      *
      * @Vich\UploadableField(mapping="product_image", fileNameProperty="imageName")
      * @Assert\NotNull(groups={"NewProduct"}, message="You should upload a product image.")
+     * @Assert\NotBlank(message="Please upload image!")
      * @Assert\Image()
      */
     private $imageFile;
@@ -82,6 +84,13 @@ class Product
     private $price;
 
     /**
+     * @var double $promoPrice
+     *
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     */
+    private $promoPrice;
+
+    /**
      * @var string $slug
      *
      * @ORM\Column(nullable=false, type="string", unique=true)
@@ -97,94 +106,166 @@ class Product
     private $reviews;
 
     /**
+     * @var Promotion[]|ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="ShoppingCartBundle\Entity\Promotion")
+     * @ORM\JoinTable(name="product_promotions")
+     */
+    private $promotions;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="ShoppingCartBundle\Entity\User", inversedBy="myProducts")
+     */
+    private $seller;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToMany(targetEntity="ShoppingCartBundle\Entity\User", mappedBy="cart")
+     * @ORM\JoinTable(name="users_carts")
+     */
+    private $userCart;
+
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
+        $this->promotions = new ArrayCollection();
         $this->createdAt = new \DateTime();
     }
 
+    /**
+     * @return int
+     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    /**
+     * @return string
+     */
+    public function getName()
     {
         return $this->name;
     }
 
-    public function setName(string $name)
+    /**
+     * @param string $name
+     */
+    public function setName($name)
     {
         $this->name = $name;
     }
 
+    /**
+     * @return string
+     */
     public function getDescription()
     {
         return $this->description;
     }
 
+    /**
+     * @param string $description
+     */
     public function setDescription($description)
     {
         $this->description = $description;
     }
 
-    public function getQuantity(): ?int
+    /**
+     * @return int
+     */
+    public function getQuantity()
     {
         return $this->quantity;
     }
 
+    /**
+     * @param int $quantity
+     */
     public function setQuantity($quantity)
     {
         $this->quantity = $quantity;
     }
 
-    public function getCategory(): ?Category
+    /**
+     * @return Category
+     */
+    public function getCategory()
     {
         return $this->category;
     }
 
+    /**
+     * @param Category $category
+     */
     public function setCategory($category)
     {
         $this->category = $category;
     }
 
+    /**
+     * @return float
+     */
     public function getPrice()
     {
         return $this->price;
     }
 
+    /**
+     * @param float $price
+     */
     public function setPrice($price)
     {
         $this->price = $price;
     }
 
+    /**
+     * @return string
+     */
     public function getSlug()
     {
         return $this->slug;
     }
 
+    /**
+     * @param string $slug
+     */
     public function setSlug($slug)
     {
         $this->slug = $slug;
     }
 
-    public function getCreatedAt(): \DateTime
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt()
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $createdAt)
+    /**
+     * @param \DateTime $createdAt
+     */
+    public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
     }
 
-    public function getImageName(): string
+    /**
+     * @return string
+     */
+    public function getImageName()
     {
         return $this->imageName;
     }
@@ -197,6 +278,9 @@ class Product
         $this->imageName = $imageName;
     }
 
+    /**
+     * @return File
+     */
     public function getImageFile()
     {
         return $this->imageFile;
@@ -223,6 +307,41 @@ class Product
         $this->reviews = $reviews;
     }
 
+    /**
+     * @return float
+     */
+    public function getPromoPrice(): float
+    {
+        return $this->promoPrice;
+    }
+
+    /**
+     * @param float $promoPrice
+     */
+    public function setPromoPrice(float $promoPrice)
+    {
+        $this->promoPrice = $promoPrice;
+    }
+
+    /**
+     * @return ArrayCollection|Promotion[]
+     */
+    public function getPromotions()
+    {
+        return $this->promotions;
+    }
+
+    /**
+     * @param ArrayCollection|Promotion[] $promotions
+     */
+    public function setPromotions($promotions)
+    {
+        $this->promotions = $promotions;
+    }
+
+    /**
+     * @return int
+     */
     public function getAverageRating(): int
     {
         if (count($this->getReviews()) > 0) {

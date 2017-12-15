@@ -81,7 +81,7 @@ class Promotion
     /**
      * @param string $name
      */
-    public function setName(string $name)
+    public function setName($name)
     {
         $this->name = $name;
     }
@@ -97,7 +97,7 @@ class Promotion
     /**
      * @param int $discount
      */
-    public function setDiscount(int $discount)
+    public function setDiscount($discount)
     {
         $this->discount = $discount;
     }
@@ -105,7 +105,7 @@ class Promotion
     /**
      * @return \DateTime
      */
-    public function getStartDate(): ?\DateTime
+    public function getStartDate()
     {
         return $this->startDate;
     }
@@ -113,7 +113,7 @@ class Promotion
     /**
      * @param \DateTime $startDate
      */
-    public function setStartDate(\DateTime $startDate)
+    public function setStartDate($startDate)
     {
         $this->startDate = $startDate;
     }
@@ -121,7 +121,7 @@ class Promotion
     /**
      * @return \DateTime
      */
-    public function getEndDate(): ?\DateTime
+    public function getEndDate()
     {
         return $this->endDate;
     }
@@ -129,8 +129,13 @@ class Promotion
     /**
      * @param \DateTime $endDate
      */
-    public function setEndDate(\DateTime $endDate)
+    public function setEndDate($endDate)
     {
         $this->endDate = $endDate;
+    }
+
+    public function __toString()
+    {
+        return $this->getName() . " / {$this->getDiscount()} % discount on products";
     }
 }

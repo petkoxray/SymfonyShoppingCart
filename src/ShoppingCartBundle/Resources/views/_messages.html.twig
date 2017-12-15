@@ -4,18 +4,10 @@
             {% for type, messages in app.session.flashbag.all %}
                 {% for message in messages %}
                     <div class="alert alert-{{ type ? type : 'info' }}">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                    aria-hidden="true">&times;</span></button>
-                        <strong>{{ type == "danger" ? "Error" : type|capitalize }}!</strong> {{ message }}
+                        {{ message }}
                     </div>
                 {% endfor %}
             {% endfor %}
         </div>
     </div>
 {% endif %}
-
-<script>
-    setTimeout(function() {
-        $('#flash-message').fadeOut('slow');
-    }, 3000);
-</script>

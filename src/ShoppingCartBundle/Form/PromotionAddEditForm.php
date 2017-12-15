@@ -18,7 +18,9 @@ class PromotionAddEditForm extends AbstractType
     {
         $builder
             ->add("name", TextType::class)
-            ->add("discount", IntegerType::class)
+            ->add("discount", IntegerType::class, [
+                "label" => "Discount (in percents)"
+            ])
             ->add("startDate", DateType::class)
             ->add("endDate", DateType::class);
     }
@@ -26,7 +28,7 @@ class PromotionAddEditForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-           "data_class" => Promotion::class
+           "data_class" => Promotion::class,
         ]);
     }
 
