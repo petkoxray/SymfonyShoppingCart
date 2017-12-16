@@ -2,6 +2,8 @@
 
 namespace ShoppingCartBundle\Controller\Admin;
 
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -24,11 +26,17 @@ class CategoriesController extends Controller
      * @Route("/categories", name="admin_categories_all")
      *
      * @param Request $request
+     * @param PaginatorInterface
      * @return Response
      */
-    public function listCategoriesAction(Request $request): Response
+    public function listCategoriesAction(Request $request, PaginatorInterface $paginator): Response
     {
-        $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+        $categories = $paginator->paginate(
+            $this->getDoctrine()->getRepository(Category::class)
+            ->findAllByQueryBuilder(),
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render("@ShoppingCart/admin/categories/all.html.twig", [
             "categories" => $categories

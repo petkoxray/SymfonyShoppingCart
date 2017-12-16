@@ -2,6 +2,7 @@
 
 namespace ShoppingCartBundle\Controller\Admin;
 
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -26,11 +27,11 @@ class ProductsController extends Controller
      * @Method("GET")
      *
      * @param Request $request
+     * @param PaginatorInterface $paginator
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function allProductsAction(Request $request): Response
+    public function allProductsAction(Request $request, PaginatorInterface $paginator): Response
     {
-        $paginator = $this->get('knp_paginator');
         $products = $paginator->paginate(
             $this->getDoctrine()->getRepository(Product::class)
                 ->findAllByQueryBuilder(),

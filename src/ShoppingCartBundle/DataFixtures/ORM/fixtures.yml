@@ -62,7 +62,7 @@ ShoppingCartBundle\Entity\User:
         fullName: "User Userov"
         funds: <randomFloat(2, 500, 100)>
         roles: ["@role_1"]
-    user_{4..10}:
+    user_{4..11}:
         email: <email()>
         fullName: <name()>
         plainPassword: 123

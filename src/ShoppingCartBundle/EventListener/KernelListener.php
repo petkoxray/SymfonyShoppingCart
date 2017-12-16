@@ -1,25 +1,25 @@
 <?php
 namespace ShoppingCartBundle\EventListener;
 
-use ShoppingCartBundle\Entity\BlackList;
-use ShoppingCartBundle\Repository\BlackListRepository;
+use ShoppingCartBundle\Entity\BannedIP;
+use ShoppingCartBundle\Repository\BannedIPRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 class KernelListener
 {
-    private $blackListRepostiory;
+    private $bannedIPRepository;
 
-    public function __construct(BlackListRepository $blackListRepository)
+    public function __construct(BannedIPRepository $bannedIPRepository)
     {
-        $this->blackListRepostiory = $blackListRepository;
+        $this->bannedIPRepository = $bannedIPRepository;
     }
 
     public function onKernelRequest(GetResponseEvent $event)
     {
-        $bannedIps = $ids = array_map($transform = function(BlackList $blacklist) {
-                return $blacklist->getIp();
-        }, $this->blackListRepostiory->findAll());
+        $bannedIps = $ids = array_map($transform = function(BannedIP $bannedIp) {
+                return $bannedIp->getIp();
+        }, $this->bannedIPRepository->findAll());
 
         if (in_array($event->getRequest()->getClientIp(), $bannedIps)) {
             $event->setResponse(new Response(

@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="ShoppingCartBundle\Repository\CategoryRepository")
  * @ORM\Table(name="category")
  * @UniqueEntity(fields={"name"}, message="A category with this name already exists in database!")
  */

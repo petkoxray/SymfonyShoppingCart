@@ -4,8 +4,8 @@ namespace ShoppingCartBundle\Controller\Admin;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use ShoppingCartBundle\Entity\BlackList;
-use ShoppingCartBundle\Form\BlacklistAddForm;
+use ShoppingCartBundle\Entity\BannedIP;
+use ShoppingCartBundle\Form\BannedIPAddForm;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +25,7 @@ class SecurityController extends Controller
      */
     public function allBannedAction(): Response
     {
-        $bannedIps = $this->getDoctrine()->getRepository(BlackList::class)->findAll();
+        $bannedIps = $this->getDoctrine()->getRepository(BannedIP::class)->findAll();
 
         return $this->render("@ShoppingCart/admin/security/blacklist_ips/all.html.twig",[
             "bannedIps" => $bannedIps
@@ -40,16 +40,16 @@ class SecurityController extends Controller
      */
     public function addBannedIpAction(Request $request): Response
     {
-        $form = $this->createForm(BlacklistAddForm::class);
+        $form = $this->createForm(BannedIPAddForm::class);
         $form = $form->handleRequest($request);
 
-        if ($form->isValid() && $form->isSubmitted()) {
-            $blacklistedIp = $form->getData();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $bannedIP = $form->getData();
             $em = $this->getDoctrine()->getManager();
-            $em->persist($blacklistedIp);
+            $em->persist($bannedIP);
             $em->flush();
 
-            $this->addFlash("success", "Ip {$blacklistedIp->getIp()} added to the banned ips.");
+            $this->addFlash("success", "Ip {$bannedIP->getIp()} added to the banned ips.");
             return $this->redirectToRoute("admin_bannedips_all");
         }
 
@@ -64,13 +64,13 @@ class SecurityController extends Controller
      * @param BlackList
      * @return Response
      */
-    public function deleteBannedIpAction(BlackList $blackList): Response
+    public function deleteBannedIpAction(BannedIP $bannedIP): Response
     {
         $em = $this->getDoctrine()->getManager();
-        $em->remove($blackList);
+        $em->remove($bannedIP);
         $em->flush();
 
-        $this->addFlash("success", "Ip {$blackList->getIp()} successfully removed from blacklist.");
+        $this->addFlash("success", "Ip {$bannedIP->getIp()} successfully removed from blacklist.");
         return $this->redirectToRoute("admin_bannedips_all");
     }
 }

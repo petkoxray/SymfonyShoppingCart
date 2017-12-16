@@ -52,9 +52,12 @@
         <span>You have the chance to write the first review :)</span>
     {% endif %}
     <hr>
-    {{ form_start(review_add, {'action': path('product_add_review', {'slug': product.slug}), 'method': 'POST'}) }}
-    {{ form_row(review_add.body) }}
-    {{ form_row(review_add.rating) }}
-    <button type="submit" class="btn btn-success" formnovalidate>Add Review</button>
-    {{ form_end(review_add) }}
+    {% if (review is null) or (app.user.id != review.author.id) %}
+        {{ form_start(review_add, {'action': path('product_add_review', {'slug': product.slug}), 'method': 'POST'}) }}
+        {{ form_row(review_add.body) }}
+        {{ form_row(review_add.rating) }}
+
+        <button type="submit" class="btn btn-success" formnovalidate>Add Review</button>
+        {{ form_end(review_add) }}
+    {% endif %}
 {% endblock %}

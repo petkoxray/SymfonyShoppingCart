@@ -18,6 +18,8 @@ class UserController extends Controller
     /**
      * @Route("/register", name="user_register")
      * @Method("GET")
+     *
+     * @return Response
      */
     public function registerAction(): Response
     {
@@ -35,6 +37,7 @@ class UserController extends Controller
     /**
      * @Route("/register", name="user_register_process")
      * @Method("POST")
+     *
      * @param Request $request
      * @return Response
      */
@@ -81,6 +84,8 @@ class UserController extends Controller
     /**
      * @Route("/profile", name="user_profile")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     *
+     * @return Response
      */
     public function profileAction(): Response
     {
@@ -94,6 +99,7 @@ class UserController extends Controller
     /**
      * @Route("/profile/edit", name="user_profile_edit")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     *
      * @param Request $request
      * @return Response
      */

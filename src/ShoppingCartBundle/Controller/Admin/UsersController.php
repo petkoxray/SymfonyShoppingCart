@@ -2,6 +2,7 @@
 
 namespace ShoppingCartBundle\Controller\Admin;
 
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -25,11 +26,19 @@ class UsersController extends Controller
     /**
      * @Route("/users/all", name="admin_users_all")
      * @Method("GET")
+     *
+     * @param Request $request
+     * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function allUsersAction(): Response
+    public function allUsersAction(Request $request,PaginatorInterface $paginator): Response
     {
-        $users = $this->getDoctrine()->getRepository(User::class)->findAll();
+        $users = $paginator->paginate(
+            $this->getDoctrine()->getRepository(User::class)
+                ->findAllByQueryBuilder(),
+            $request->query->getInt('page', 1),
+            10
+        );;
 
         return $this->render("ShoppingCartBundle:admin/users:all.html.twig", [
             "users" => $users
@@ -65,6 +74,7 @@ class UsersController extends Controller
 
     /**
      * @Route("/users/delete/{id}", name="admin_users_delete")
+     *
      * @return Response
      */
     public function deleteUserAction(User $user): Response
@@ -110,7 +120,7 @@ class UsersController extends Controller
      * @param User
      * @return Response
      */
-    public function banUserAction(User $user)
+    public function banUserAction(User $user): Response
     {
         $em = $this->getDoctrine()->getManager();
         if ($user->isBanned()) {
@@ -132,7 +142,7 @@ class UsersController extends Controller
      * @param User
      * @return Response
      */
-    public function unBanUserAction(User $user)
+    public function unBanUserAction(User $user): Response
     {
         $em = $this->getDoctrine()->getManager();
         if (!$user->isBanned()) {

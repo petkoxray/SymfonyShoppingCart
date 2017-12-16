@@ -12,6 +12,7 @@ class SecurityController extends Controller
 {
     /**
      * @Route("/login", name="security_login")
+     *
      * @return Response
      */
     public function loginAction(): Response

@@ -2,12 +2,14 @@
 
 namespace ShoppingCartBundle\Controller;
 
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use ShoppingCartBundle\Entity\Product;
 use ShoppingCartBundle\Entity\Review;
 use ShoppingCartBundle\Form\ReviewAddForm;
+use ShoppingCartBundle\Service\ReviewServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,15 +21,25 @@ use Symfony\Component\HttpFoundation\Response;
 class ProductController extends Controller
 {
     /**
+     * @var ReviewServiceInterface $reviewService
+     */
+    private $reviewService;
+
+    public function __construct(ReviewServiceInterface $reviewService)
+    {
+        $this->reviewService = $reviewService;
+    }
+
+    /**
      * @Route("/products", name="products_all")
      * @Method("GET")
      *
+     * @param PaginatorInterface $paginator
      * @param Request $request
      * @return Response
      */
-    public function allProductsAction(Request $request): Response
+    public function allProductsAction(Request $request, PaginatorInterface $paginator): Response
     {
-        $paginator  = $this->get('knp_paginator');
         $products = $paginator->paginate(
             $this->getDoctrine()->getRepository(Product::class)
                 ->findAllByQueryBuilder(),
@@ -49,8 +61,13 @@ class ProductController extends Controller
      */
     public function showProductAction(Product $product): Response
     {
+        $review = $this->reviewService->getReviewByUserAndProduct(
+            $this->getUser(), $product
+        );
+
         return $this->render("@ShoppingCart/products/show_product.html.twig", [
             "product" => $product,
+            "review" => $review,
             "review_add" => $this->createForm(ReviewAddForm::class)->createView()
         ]);
     }
@@ -67,6 +84,15 @@ class ProductController extends Controller
      */
     public function addReviewAction(Request $request, Product $product): Response
     {
+        $review = $this->reviewService->getReviewByUserAndProduct(
+            $this->getUser(), $product
+        );
+
+        if ($review) {
+            $this->addFlash("danger", "You already has reviewed this product!");
+            return $this->redirectToRoute('product_show', ['slug' => $product->getSlug()]);
+        }
+
         $form = $this->createForm(ReviewAddForm::class);
         $form->handleRequest($request);
 
@@ -75,10 +101,7 @@ class ProductController extends Controller
             $review = $form->getData();
             $review->setAuthor($this->getUser());
             $review->setProduct($product);
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($review);
-            $em->flush();
+            $this->reviewService->addReview($review);
 
             return $this->redirectToRoute('product_show', ['slug' => $product->getSlug()]);
         }
@@ -95,7 +118,7 @@ class ProductController extends Controller
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
      * @param Request $request
-     * @param Product $product
+     * @param Review $review
      * @return Response
      */
     public function deleteReviewAction(Request $request, Review $review): Response
@@ -103,11 +126,7 @@ class ProductController extends Controller
         $product = $review->getProduct();
 
         if ($this->getUser()->getId() === $review->getAuthor()->getId()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($review);
-            $em->flush();
-
-            $this->addFlash("success", "Review was deleted successfully!");
+            $this->reviewService->deleteReview($review);
 
             return $this->redirectToRoute('product_show', ["slug" => $product->getSlug()]);
         } else {

@@ -12,3 +12,7 @@ services:
         autowire: true
         tags:
             - { name: doctrine.event_subscriber }
+
+    ShoppingCartBundle\Service\ReviewServiceInterface:
+        alias: 'ShoppingCartBundle\Service\ReviewService'
+        public: false

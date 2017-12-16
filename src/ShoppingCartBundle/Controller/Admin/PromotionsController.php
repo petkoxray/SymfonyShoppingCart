@@ -2,6 +2,7 @@
 
 namespace ShoppingCartBundle\Controller\Admin;
 
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use ShoppingCartBundle\Entity\Promotion;
@@ -23,11 +24,11 @@ class PromotionsController extends Controller
      * @Route("/promotions", name="admin_promotions_all")
      *
      * @param Request $request
+     * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function allPromotionsAction(Request $request): Response
+    public function allPromotionsAction(Request $request, PaginatorInterface $paginator): Response
     {
-        $paginator = $this->get('knp_paginator');
         $promotions = $paginator->paginate(
             $this->getDoctrine()->getRepository(Promotion::class)
             ->findAllByQueryBuilder(),
@@ -96,11 +97,15 @@ class PromotionsController extends Controller
      * @Route("/promotions/delete/{id}", name="admin_promotions_delete")
      *
      * @param Promotion $promotion
-     * @param Request $request
      * @return Response
      */
-    public function deletePromotionAction()
+    public function deletePromotionAction(Promotion $promotion): Response
     {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($promotion);
+        $em->flush();
+
+        $this->addFlash("success", "Promotion deleted successfully");
         return $this->redirectToRoute("admin_promotions_all");
     }
 }

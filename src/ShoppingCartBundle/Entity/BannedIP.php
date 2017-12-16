@@ -7,9 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="black_list")
+ * @ORM\Table(name="banned_ip")
  */
-class BlackList
+class BannedIP
 {
     /**
      * @ORM\Id
