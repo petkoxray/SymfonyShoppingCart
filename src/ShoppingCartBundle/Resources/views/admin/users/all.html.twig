@@ -18,6 +18,7 @@
             <th>Roles</th>
             <th>Edit</th>
             <th>Delete</th>
+            <th>Status</th>
         </tr>
         </thead>
         <tbody>
@@ -35,8 +36,26 @@
                 <td>
                     <form action="{{ path("admin_users_delete", {"id": user.id}) }}" method="post">
                         <button class="btn btn-danger delete-item" type="submit"><i class="fa fa-trash-o"></i>
-                            Delete</button>
+                            Delete
+                        </button>
                     </form>
+                </td>
+                <td>
+                    {% if user.isBanned %}
+                        <form action="{{ path("admin_users_unban", {"id": user.id}) }}" method="post">
+                            <button class="btn btn-danger delete-item" type="submit"><i class="fa fa-cog"
+                                                                                        aria-hidden="true"></i>
+                                Unban
+                            </button>
+                        </form>
+                    {% else %}
+                        <form action="{{ path("admin_users_ban", {"id": user.id}) }}" method="post">
+                            <button class="btn btn-block delete-item" type="submit"><i class="fa fa-cog"
+                                                                                       aria-hidden="true"></i>
+                                Ban
+                            </button>
+                        </form>
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}

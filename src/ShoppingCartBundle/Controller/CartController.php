@@ -3,17 +3,26 @@
 namespace ShoppingCartBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use ShoppingCartBundle\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class CartController
+ * @package ShoppingCartBundle\Controller
+ *
+ * @Route("/cart")
+ * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+ */
 class CartController extends Controller
 {
     /**
-     *@Route("/cart/add")
+     * @Route("/add")
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function indexAction()
+    public function indexAction(): Response
     {
         $product = $this->getDoctrine()->getRepository(Product::class)
             ->find(1);

@@ -103,4 +103,49 @@ class UsersController extends Controller
             "edit_form" => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/users/ban/{id}", name="admin_users_ban")
+     *
+     * @param User
+     * @return Response
+     */
+    public function banUserAction(User $user)
+    {
+        $em = $this->getDoctrine()->getManager();
+        if ($user->isBanned()) {
+            $this->addFlash("error", "User with username {$user->getEmail()} is already banned!");
+
+            return $this->redirectToRoute('admin_users_all');
+        }
+
+        $user->setIsBanned(true);
+        $em->flush();
+
+        $this->addFlash("success", "User with username {$user->getEmail()} is banned!");
+        return $this->redirectToRoute('admin_users_all');
+    }
+
+    /**
+     * @Route("/users/unban/{id}", name="admin_users_unban")
+     *
+     * @param User
+     * @return Response
+     */
+    public function unBanUserAction(User $user)
+    {
+        $em = $this->getDoctrine()->getManager();
+        if (!$user->isBanned()) {
+            $this->addFlash("error", "User with username {$user->getEmail()} is already not banned!");
+
+            return $this->redirectToRoute('admin_users_all');
+        }
+
+        $user->setIsBanned(false);
+        $em->flush();
+
+        $this->addFlash("success", "User with username {$user->getEmail()} is is unlocked / not banned!");
+        return $this->redirectToRoute('admin_users_all');
+    }
 }
+

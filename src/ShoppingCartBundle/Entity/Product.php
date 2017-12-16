@@ -54,7 +54,6 @@ class Product
      * @var string $imageName
      *
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
      */
     private $imageName;
     /**
@@ -62,12 +61,13 @@ class Product
      *
      * @Vich\UploadableField(mapping="product_image", fileNameProperty="imageName")
      * @Assert\NotNull(groups={"NewProduct"}, message="You should upload a product image.")
-     * @Assert\NotBlank(message="Please upload image!")
      * @Assert\Image()
      */
     private $imageFile;
 
     /**
+     * @var Category
+     *
      * @ORM\ManyToOne(targetEntity="ShoppingCartBundle\Entity\Category", inversedBy="products",  fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="CASCADE")
      * @Assert\NotBlank()
