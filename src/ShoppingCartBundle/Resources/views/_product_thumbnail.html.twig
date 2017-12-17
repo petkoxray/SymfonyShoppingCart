@@ -12,6 +12,8 @@
                 <span class="label label-success">€{{ product.price|number_format(2) }}</span>
             </div>
             <hr>
+            {% if product.hasActivePromotion %}
+            {% endif %}
             <p class="text">
             <form method="post" action="#"
                   style="display: inline-block">

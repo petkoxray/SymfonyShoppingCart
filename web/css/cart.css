@@ -7,6 +7,14 @@ body {
     margin-bottom: 10px;
 }
 
+* {
+    border-radius: 0 !important;
+}
+
+.container {
+    width: 100%;
+}
+
 .nav-tabs {
     margin-bottom: 10px;
 }
@@ -34,4 +42,8 @@ a.desc:after {
 
 .checked {
     color: orange;
+}
+
+.footer {
+    background-color: lightgray;
 }

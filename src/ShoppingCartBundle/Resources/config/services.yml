@@ -16,3 +16,7 @@ services:
     ShoppingCartBundle\Service\ReviewServiceInterface:
         alias: 'ShoppingCartBundle\Service\ReviewService'
         public: false
+
+    ShoppingCartBundle\Service\PromotionServiceInterface:
+        alias: 'ShoppingCartBundle\Service\PromotionService'
+        public: false

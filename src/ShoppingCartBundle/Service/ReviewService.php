@@ -37,7 +37,7 @@ class ReviewService implements ReviewServiceInterface
         $this->entityManager = $entityManager;
     }
 
-    public function addReview(Review $review)
+    public function addReview(Review $review):void
     {
         $this->entityManager->persist($review);
         $this->entityManager->flush();
@@ -49,7 +49,7 @@ class ReviewService implements ReviewServiceInterface
         return $this->reviewRepository->findOneByProductAndUser($user, $product);
     }
 
-    public function deleteReview(Review $review)
+    public function deleteReview(Review $review): void
     {
         $this->entityManager->remove($review);
         $this->entityManager->flush();

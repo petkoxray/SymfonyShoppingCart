@@ -6,7 +6,10 @@ use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use ShoppingCartBundle\Entity\Promotion;
+use ShoppingCartBundle\Form\AddPromotionToAllProducts;
+use ShoppingCartBundle\Form\AddPromotionToCategoryForm;
 use ShoppingCartBundle\Form\PromotionAddEditForm;
+use ShoppingCartBundle\Service\PromotionServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +23,13 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class PromotionsController extends Controller
 {
+    private $promotionService;
+
+    public function __construct(PromotionServiceInterface $promotionService)
+    {
+        $this->promotionService = $promotionService;
+    }
+
     /**
      * @Route("/promotions", name="admin_promotions_all")
      *
@@ -107,5 +117,56 @@ class PromotionsController extends Controller
 
         $this->addFlash("success", "Promotion deleted successfully");
         return $this->redirectToRoute("admin_promotions_all");
+    }
+
+    /**
+     * @Route("/promotions/add-to-category/", name="admin_promotions_apply_to_category")
+     *
+     * @param Request
+     * @return Response
+     */
+    public function applyPromotionToCategoryAction(Request $request): Response
+    {
+        $form = $this->createForm(AddPromotionToCategoryForm::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $this->promotionService->applyPromotionToCategory(
+                $data['promotion'], $data['category']
+            );
+
+            return $this->redirectToRoute('admin_promotions_all');
+        }
+
+        return $this->render("@ShoppingCart/admin/promotions/add-promotion-to-category.html.twig", [
+            "add_form" => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/promotions/add-to-all-products/",
+     *     name="admin_promotions_apply_to_all_products")
+     *
+     * @param Request
+     * @return Response
+     */
+    public function applyPromotionToAllProductsAction(Request $request): Response
+    {
+        $form = $this->createForm(AddPromotionToAllProducts::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $this->promotionService->applyPromotionToAllProducts(
+                $data['promotion']
+            );
+
+            $this->redirectToRoute('admin_promotions_all');
+        }
+
+        return $this->render('@ShoppingCart/admin/promotions/add-promotion-to-all-products.html.twig', [
+            "add_form" => $form->createView()
+        ]);
     }
 }

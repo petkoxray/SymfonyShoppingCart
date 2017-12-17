@@ -134,6 +134,19 @@ class Promotion
         $this->endDate = $endDate;
     }
 
+    /**
+     * @return  bool
+     */
+    public function isActive()
+    {
+        if ($this->getStartDate() < new \DateTime('now') &&
+            $this->getEndDate() > new \DateTime('now')) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function __toString()
     {
         return $this->getName() . " / {$this->getDiscount()} % discount on products";

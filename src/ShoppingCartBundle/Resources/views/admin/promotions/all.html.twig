@@ -2,8 +2,14 @@
 
 {% block body %}
     <h2 class="text-left">All promotions</h2>
-    <p class="text-right">
+    <p class="text-center">
         <a href="{{ path("admin_promotions_add") }}" class="btn btn-success">Add new promotion <i
+                    class="fa fa-plus-circle" aria-hidden="true"></i></a>
+        <a href="{{ path("admin_promotions_apply_to_category") }}" class="btn btn-success">Apply Promotion to Category
+            <i
+                    class="fa fa-plus-circle" aria-hidden="true"></i></a>
+        <a href="{{ path("admin_promotions_apply_to_all_products") }}" class="btn btn-success">Apply Promotion to All Products
+            <i
                     class="fa fa-plus-circle" aria-hidden="true"></i></a>
     </p>
     <hr>
@@ -25,7 +31,7 @@
                 <tr>
                     <td>{{ promotion.id }}</td>
                     <td>{{ promotion.name }}</td>
-                    <td>{{ promotion.discount }} % </td>
+                    <td>{{ promotion.discount }} %</td>
                     <td>{{ promotion.startDate|date('Y-m-d') }}</td>
                     <td>{{ promotion.endDate|date('Y-m-d') }}</td>
                     <td>
@@ -36,7 +42,8 @@
                     <td>
                         <form action="{{ path("admin_promotions_delete", {"id": promotion.id}) }}" method="post">
                             <button class="btn btn-danger delete-item" type="submit"><i class="fa fa-trash-o"></i>
-                                Delete</button>
+                                Delete
+                            </button>
                         </form>
                     </td>
                 </tr>

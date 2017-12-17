@@ -3,7 +3,7 @@
         <div id="flash-message" class="col-md-12">
             {% for type, messages in app.session.flashbag.all %}
                 {% for message in messages %}
-                    <div class="alert alert-{{ type ? type : 'info' }}">
+                    <div class="text-center alert alert-{{ type ? type : 'info' }}">
                         {{ message }}
                     </div>
                 {% endfor %}
