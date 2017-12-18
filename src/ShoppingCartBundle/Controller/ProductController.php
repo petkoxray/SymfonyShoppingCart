@@ -61,13 +61,8 @@ class ProductController extends Controller
      */
     public function showProductAction(Product $product): Response
     {
-        $review = $this->reviewService->getReviewByUserAndProduct(
-            $this->getUser(), $product
-        );
-
         return $this->render("@ShoppingCart/products/show_product.html.twig", [
             "product" => $product,
-            "review" => $review,
             "review_add" => $this->createForm(ReviewAddForm::class)->createView()
         ]);
     }

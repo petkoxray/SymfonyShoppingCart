@@ -84,13 +84,6 @@ class Product
     private $price;
 
     /**
-     * @var double $promoPrice
-     *
-     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     */
-    private $promoPrice;
-
-    /**
      * @var string $slug
      *
      * @ORM\Column(nullable=false, type="string", unique=true)
@@ -110,6 +103,7 @@ class Product
      *
      * @ORM\ManyToMany(targetEntity="ShoppingCartBundle\Entity\Promotion")
      * @ORM\JoinTable(name="product_promotions")
+     * @ORM\OrderBy({"discount" = "DESC"})
      */
     private $promotions;
 
@@ -219,7 +213,12 @@ class Product
      */
     public function getPrice()
     {
-        return $this->price;
+        if (!$this->hasActivePromotion()) {
+            return $this->price;
+        }
+
+        $discount = $this->price * $this->getBiggestActivePromotion()->getDiscount() / 100;
+        return $this->price - $discount;
     }
 
     /**
@@ -310,17 +309,9 @@ class Product
     /**
      * @return float
      */
-    public function getPromoPrice(): float
+    public function getOriginalPrice()
     {
-        return $this->promoPrice;
-    }
-
-    /**
-     * @param float $promoPrice
-     */
-    public function setPromoPrice(float $promoPrice)
-    {
-        $this->promoPrice = $promoPrice;
+        return $this->price;
     }
 
     /**
@@ -357,6 +348,9 @@ class Product
         return 0;
     }
 
+    /**
+     * @return bool
+     */
     public function hasActivePromotion()
     {
         if ($this->getBiggestActivePromotion()) {
@@ -370,32 +364,22 @@ class Product
      */
     public function getBiggestActivePromotion()
     {
-        $activePromotions = $this->promotions->filter(function (Promotion $promotion) {
-                return $promotion->isActive();
-            });
-
-        if ($activePromotions->count() == 0) {
-            return null;
-        }
-
-        if ($activePromotions->count() == 1) {
-            return $activePromotions->first();
-        }
-
-        $sortedPromotions = $activePromotions->getValues();
-
-        usort($sortedPromotions, function (Promotion $p1, Promotion $p2) {
-            return $p2->getDiscount() - $p1->getDiscount();
-        });
-
-        return $sortedPromotions[0];
+        return $this->promotions->filter(function (Promotion $promotion) {
+            return $promotion->isActive();
+        })->first();
     }
 
+    /**
+     * @param Promotion $promotion
+     */
     public function addPromotion(Promotion $promotion)
     {
         $this->promotions->add($promotion);
     }
 
+    /**
+     * @param Promotion $promotion
+     */
     public function removePromotion(Promotion $promotion)
     {
         $this->promotions->removeElement($promotion);

@@ -12,4 +12,5 @@ interface PromotionServiceInterface
 
     public function applyPromotionToAllProducts(Promotion $promotion): void;
 
+    public function removeExpiredPromotionsFromProducts(): void;
 }

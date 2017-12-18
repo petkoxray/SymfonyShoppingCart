@@ -60,4 +60,9 @@ class PromotionService implements PromotionServiceInterface
             "Promotion {$promotion->getName()} has been applied to all products");
         $this->entityManager->flush();
     }
+
+    public function removeExpiredPromotionsFromProducts(): void
+    {
+
+    }
 }

@@ -21,4 +21,12 @@ class PromotionRepository extends EntityRepository
         return $this->createQueryBuilder("promotion")
             ->orderBy("promotion.endDate", "asc");
     }
+
+    public function findAllExpiredPromotions()
+    {
+        $this->createQueryBuilder('promotion')
+            ->where('promotion.endDate' < new \DateTime())
+            ->getQuery()
+            ->execute();
+    }
 }

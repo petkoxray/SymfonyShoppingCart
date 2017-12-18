@@ -2,15 +2,7 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-md-6">
-            <h2>{{ product.name }}</h2>
-            <hr>
-            <div class="thumbnail">
-                <img src="{{ vich_uploader_asset(product, "imageFile") }}" alt="{{ product.name }}">
-                <p class="text-center">{{ product.averageRating|starsRating|raw }}</p>
-            </div>
-        </div>
-        <div class="col-md-6">
+        <div class="col-md-7">
             <h2>Description:</h2>
             <p>{{ product.description }}</p>
             <p>Category: <a
@@ -19,9 +11,22 @@
             <p>In stock: <strong>{{ product.quantity }}</strong></p>
             <div class="h2">
                 Price:
-                <span class="label label-success">€{{ product.price }}</span>
+                {% if product.hasActivePromotion %}
+                    <span class="label label-success"><s>€{{ product.originalPrice|number_format(2) }}</s></span>
+                    <span class="label label-info">€{{ product.price|number_format(2) }}</span>
+                {% else %}
+                    <span class="label label-success">€{{ product.price }}</span>
+                {% endif %}
             </div>
             <hr>
+        </div>
+        <div class="col-md-5">
+            <h2>{{ product.name }}</h2>
+            <hr>
+            <div class="thumbnail">
+                <img src="{{ vich_uploader_asset(product, "imageFile") }}" alt="{{ product.name }}">
+                <p class="text-center">{{ product.averageRating|starsRating|raw }}</p>
+            </div>
         </div>
     </div>
     <hr>
@@ -52,12 +57,10 @@
         <span>You have the chance to write the first review :)</span>
     {% endif %}
     <hr>
-    {% if (review is null) or (app.user.id != review.author.id) %}
-        {{ form_start(review_add, {'action': path('product_add_review', {'slug': product.slug}), 'method': 'POST'}) }}
-        {{ form_row(review_add.body) }}
-        {{ form_row(review_add.rating) }}
+    {{ form_start(review_add, {'action': path('product_add_review', {'slug': product.slug}), 'method': 'POST'}) }}
+    {{ form_row(review_add.body) }}
+    {{ form_row(review_add.rating) }}
 
-        <button type="submit" class="btn btn-success" formnovalidate>Add Review</button>
-        {{ form_end(review_add) }}
-    {% endif %}
+    <button type="submit" class="btn btn-success" formnovalidate>Add Review</button>
+    {{ form_end(review_add) }}
 {% endblock %}
