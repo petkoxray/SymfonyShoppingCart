@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User implements UserInterface, AdvancedUserInterface
 {
-    CONST INITIAL_FUNDS = 2499;
+    CONST INITIAL_MONEY = 2499;
 
     /**
      * @var int $id
@@ -45,12 +45,12 @@ class User implements UserInterface, AdvancedUserInterface
     private $fullName;
 
     /**
-     * @var double $funds
+     * @var double $money
      *
      * @ORM\Column(type="decimal", precision=10, scale=2)
      * @Assert\Range(min="0", max="100000")
      */
-    private $funds;
+    private $money;
 
     /**
      * @var string
@@ -109,7 +109,7 @@ class User implements UserInterface, AdvancedUserInterface
         $this->roles = new ArrayCollection();
         $this->reviews = new ArrayCollection();
         $this->isBanned = false;
-        $this->funds = self::INITIAL_FUNDS;
+        $this->money = self::INITIAL_MONEY;
     }
 
     /**
@@ -235,14 +235,14 @@ class User implements UserInterface, AdvancedUserInterface
     /**
      * @return float
      */
-    public function getFunds()
+    public function getMoney()
     {
-        return $this->funds;
+        return $this->money;
     }
 
-    public function setFunds($funds): User
+    public function setMoney($money): User
     {
-        $this->funds = $funds;
+        $this->money = $money;
 
         return $this;
     }

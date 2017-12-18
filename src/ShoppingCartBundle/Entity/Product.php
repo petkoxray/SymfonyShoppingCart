@@ -384,4 +384,12 @@ class Product
     {
         $this->promotions->removeElement($promotion);
     }
+
+    /**
+     * @return bool
+     */
+    public function isInStock(): bool
+    {
+        return $this->quantity > 0;
+    }
 }

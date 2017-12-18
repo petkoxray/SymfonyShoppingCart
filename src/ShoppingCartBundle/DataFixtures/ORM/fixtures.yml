@@ -48,25 +48,25 @@ ShoppingCartBundle\Entity\User:
         email: admin@petkoxray.eu
         plainPassword: test
         fullName: Admin Adminov
-        funds: <randomFloat(2, 50000, 100000)>
+        money: <randomFloat(2, 50000, 100000)>
         roles: ["@role_3", "@role_2", "@role_1"]
     user_2:
         email: editor@petkoxray.eu
         plainPassword: test
         fullName: "Editor Editorov"
-        funds: <randomFloat(2, 1000, 2000)>
+        money: <randomFloat(2, 1000, 2000)>
         roles: ["@role_2", "@role_1"]
     user_3:
         email: user@petkoxray.eu
         plainPassword: test
         fullName: "User Userov"
-        funds: <randomFloat(2, 500, 100)>
+        money: <randomFloat(2, 500, 100)>
         roles: ["@role_1"]
     user_{4..11}:
         email: <email()>
         fullName: <name()>
         plainPassword: 123
-        funds: <randomFloat(2, 200, 1000)>
+        money: <randomFloat(2, 200, 1000)>
         roles: ["@role_1"]
 
 ShoppingCartBundle\Entity\Review:

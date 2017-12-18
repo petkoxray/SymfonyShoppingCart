@@ -19,11 +19,9 @@
             </div>
             <hr>
             <p class="text">
-            <form method="post" action="#"
-                  style="display: inline-block">
-                <button class="btn btn-primary" type="submit"><span
-                            class="fa fa-cart-plus"></span> Add to Cart
-                </button>
+            <form method="post" style="display: inline-block">
+                <a href="{{ path("cart_add", {"slug": product.slug}) }}" class="btn btn-primary"
+                   role="button"><i class="fa fa-cart-plus" aria-hidden="true"> Add to Cart</i></a>
             </form>
             <a href="{{ path("product_show", {"slug": product.slug}) }}" class="btn btn-default"
                role="button"><i class="fa fa-info" aria-hidden="true"> Details</i>

@@ -22,7 +22,6 @@
         </div>
         <div class="col-md-5">
             <h2>{{ product.name }}</h2>
-            <hr>
             <div class="thumbnail">
                 <img src="{{ vich_uploader_asset(product, "imageFile") }}" alt="{{ product.name }}">
                 <p class="text-center">{{ product.averageRating|starsRating|raw }}</p>

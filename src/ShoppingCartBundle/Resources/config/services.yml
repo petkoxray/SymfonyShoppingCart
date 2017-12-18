@@ -20,3 +20,11 @@ services:
     ShoppingCartBundle\Service\PromotionServiceInterface:
         alias: 'ShoppingCartBundle\Service\PromotionService'
         public: false
+
+    ShoppingCartBundle\Service\CartServiceInterface:
+        alias: 'ShoppingCartBundle\Service\CartService'
+        public: false
+
+    Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface:
+        alias: 'session.flash_bag'
+        public: false

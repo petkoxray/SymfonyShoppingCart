@@ -14,7 +14,7 @@
             <th>Id</th>
             <th>Email</th>
             <th>Fullname</th>
-            <th>Funds</th>
+            <th>Money</th>
             <th>Roles</th>
             <th>Edit</th>
             <th>Delete</th>
@@ -27,7 +27,7 @@
                 <td>{{ user.id }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.fullName }}</td>
-                <td>{{ user.funds }}</td>
+                <td>{{ user.money }}</td>
                 <td>{{ user.roles|join(", ") }}</td>
                 <td>
                     <a href="{{ path("admin_users_edit", {"id": user.id}) }}" class="btn btn-warning"><i

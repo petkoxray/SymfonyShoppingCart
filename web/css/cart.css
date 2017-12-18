@@ -24,8 +24,12 @@ img.admin-image, .cart-image {
     max-height: 100px;
 }
 
+.instock {
+    color: green;
+}
+
 .out-of-stock {
-    background: cornsilk;
+    color: red;
 }
 
 a.asc, a.desc, a.sortable {

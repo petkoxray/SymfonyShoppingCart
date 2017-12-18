@@ -19,7 +19,7 @@ class UserAddEditForm extends AbstractType
         $builder
             ->add("email")
             ->add("fullName")
-            ->add("funds")
+            ->add("money")
             ->add("roles", EntityType::class, [
                 "class" => 'ShoppingCartBundle\Entity\Role',
                 "multiple" => true,

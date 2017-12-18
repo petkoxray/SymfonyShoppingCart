@@ -15,7 +15,7 @@ class HomeController extends Controller
     public function indexAction(): Response
     {
         $products = $this->getDoctrine()->getRepository(Product::class)
-            ->findLastProducts(9);
+            ->findLastProducts(6);
 
         return $this->render('@ShoppingCart/index.html.twig', [
             'products' => $products
