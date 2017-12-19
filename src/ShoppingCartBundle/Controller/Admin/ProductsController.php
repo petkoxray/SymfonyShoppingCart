@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use ShoppingCartBundle\Entity\Product;
+use ShoppingCartBundle\Entity\User;
 use ShoppingCartBundle\Form\ProductAddEditForm;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -57,6 +58,9 @@ class ProductsController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $product = $form->getData();
+            $shopOwner = $this->getDoctrine()->getRepository(User::class)
+                ->findOneBy(["email" => "admin@petkoxray.eu"]);
+            $product->setSeller($shopOwner);
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();

@@ -27,7 +27,10 @@
                                                        alt="Product Image">
                             </div>
                             <div class="col-xs-4">
-                                <h4 class="product-name"><strong>{{ product.name }}</strong></h4>
+                                <h4 class="product-name"><a class="deco-none"
+                                                            href="{{ path("product_show", {"slug": product.slug}) }}">
+                                        {{ product.name }}
+                                    </a></h4>
                                 <h4>
                                     {% if product.isInStock %}
                                         <small class="instock">In Stock / {{ product.quantity }}</small>
@@ -64,11 +67,17 @@
             <div class="panel-footer">
                 <div class="row text-center">
                     <div class="col-xs-9">
-                        <h4 class="text-right">Total <strong>€{{ cartTotal|number_format(2) }}</strong></h4>
+                        <p class="text-left">Money in your account: €{{ app.user.money }}. </p>
+                        {% if app.user.money < cartTotal %}
+                            <p class="out-of-stock text-left">You dont have enough money to complete your order!</p>
+                        {% endif %}
                     </div>
                     <div class="col-xs-3">
+                        <h4 class="text-right">
+                            Total <strong>€{{ cartTotal|number_format(2) }}</strong></h4>
                         <form method="post" action="{{ path('cart_checkout') }}">
-                            <button type="submit" class="btn btn-success btn-block">
+                            <button type="submit"
+                                    class="btn btn-success btn-block {{ cartTotal > app.user.money ? "disabled" : "" }}">
                                 Checkout
                             </button>
                         </form>
@@ -76,6 +85,5 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 {% endblock %}

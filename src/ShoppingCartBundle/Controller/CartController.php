@@ -78,5 +78,7 @@ class CartController extends Controller
         if (!$this->cartService->checkoutCart($this->getUser())) {
             return $this->redirectToRoute('cart_show');
         }
+
+        return $this->redirectToRoute("homepage");
     }
 }

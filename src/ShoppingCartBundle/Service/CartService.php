@@ -3,6 +3,7 @@
 namespace ShoppingCartBundle\Service;
 
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 use ShoppingCartBundle\Entity\Product;
@@ -15,15 +16,18 @@ class CartService implements CartServiceInterface
     private $flashBag;
     private $entityManager;
     private $manager;
+    private $productService;
 
     public function __construct(
         FlashBagInterface $flashBag,
         EntityManagerInterface $entityManager,
-        ManagerRegistry $manager
+        ManagerRegistry $manager,
+        ProductServiceInterface $productService
     ) {
         $this->flashBag = $flashBag;
         $this->entityManager = $entityManager;
         $this->manager = $manager;
+        $this->productService = $productService;
     }
 
     public function addToCart(Product $product, User $user): bool
@@ -67,10 +71,37 @@ class CartService implements CartServiceInterface
 
     public function checkoutCart(User $user): bool
     {
-        $userMoney = $user->getMoney();
-        if ($userMoney < $this->getCartTotal($user)) {
-            $this->flashBag->add('danger', "You don't have enough money to complete your order!");
+        $cartProducts = $user->getCart();
+        if (!$this->productService->isProductsInStock($cartProducts)) {
+            $this->flashBag
+                ->add('danger',
+                    "Some products are out of stock! Please remove them to proceed!");
             return false;
         }
+
+        $userMoney = $user->getMoney();
+        if ($userMoney < $this->getCartTotal($user)) {
+            $this->flashBag
+                ->add('danger',
+                    "You don't have enough money to complete your order!");
+            return false;
+        }
+
+        foreach ($cartProducts as $product)
+        {
+            $product->setQuantity($product->getQuantity() - 1);
+            $user->getCart()->removeElement($product);
+            /**
+             * @var User $seller
+             */
+            $seller = $product->getSeller();
+            $seller->setMoney($seller->getMoney() + $product->getPrice());
+        }
+
+        $this->entityManager->flush();
+        $this->flashBag
+            ->add('success',
+                "Order successful!");
+        return true;
     }
 }

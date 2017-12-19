@@ -28,3 +28,7 @@ services:
     Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface:
         alias: 'session.flash_bag'
         public: false
+
+    ShoppingCartBundle\Service\ProductServiceInterface:
+        alias: 'ShoppingCartBundle\Service\ProductService'
+        public: false

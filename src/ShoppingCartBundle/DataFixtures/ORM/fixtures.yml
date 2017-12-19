@@ -45,11 +45,11 @@ ShoppingCartBundle\Entity\Role:
 
 ShoppingCartBundle\Entity\User:
     user_1:
-        email: admin@petkoxray.eu
+        email: shop@petkoxray.eu
         plainPassword: test
-        fullName: Admin Adminov
+        fullName: Shop Owner
         money: <randomFloat(2, 50000, 100000)>
-        roles: ["@role_3", "@role_2", "@role_1"]
+        roles: ["@role_3", "@role_2"]
     user_2:
         email: editor@petkoxray.eu
         plainPassword: test

@@ -331,6 +331,22 @@ class Product
     }
 
     /**
+     * @return User
+     */
+    public function getSeller()
+    {
+        return $this->seller;
+    }
+
+    /**
+     * @param User $seller
+     */
+    public function setSeller($seller)
+    {
+        $this->seller = $seller;
+    }
+
+    /**
      * @return int
      */
     public function getAverageRating(): int
