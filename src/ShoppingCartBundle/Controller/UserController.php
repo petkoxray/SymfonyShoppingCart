@@ -2,9 +2,11 @@
 
 namespace ShoppingCartBundle\Controller;
 
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use ShoppingCartBundle\Entity\Order;
 use ShoppingCartBundle\Form\ProfileEditForm;
 use ShoppingCartBundle\Form\RegisterForm;
 use ShoppingCartBundle\Entity\Role;
@@ -64,8 +66,8 @@ class UserController extends Controller
             $em->persist($user);
             $em->flush();
 
-            $this->container->get("session")->getFlashBag()
-                ->add("success", "You have successfully registered and logged in.");
+            $this->addFlash
+                ("success", "You have successfully registered and logged in.");
 
             return $this->get("security.authentication.guard_handler")
                 ->authenticateUserAndHandleSuccess(
@@ -111,16 +113,36 @@ class UserController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
             $em->flush();
 
             $this->addFlash("success", "Profile edited successfully!");
-
             return $this->redirectToRoute("user_profile");
         }
 
         return $this->render('ShoppingCartBundle:users:edit.html.twig', [
-           "edit_form" => $form->createView()
+            "edit_form" => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/orders", name="user_orders")
+     *
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @param Request $request
+     * @param PaginatorInterface $paginator
+     * @return Response
+     */
+    public function userOrdersAction(Request $request, PaginatorInterface $paginator): Response
+    {
+        $orders = $paginator->paginate(
+            $this->getDoctrine()->getRepository(Order::class)
+                ->findOrdersByUserQueryBuilder($this->getUser()),
+            $request->query->getInt('page', 1),
+            5
+        );
+
+        return $this->render("@ShoppingCart/users/orders.html.twig", [
+            "orders" => $orders
         ]);
     }
 }

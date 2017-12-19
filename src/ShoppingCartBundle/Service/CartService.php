@@ -2,8 +2,6 @@
 
 namespace ShoppingCartBundle\Service;
 
-
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 use ShoppingCartBundle\Entity\Product;
@@ -12,22 +10,24 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 class CartService implements CartServiceInterface
 {
-    private $promotionRepository;
     private $flashBag;
     private $entityManager;
     private $manager;
     private $productService;
+    private $orderService;
 
     public function __construct(
         FlashBagInterface $flashBag,
         EntityManagerInterface $entityManager,
         ManagerRegistry $manager,
-        ProductServiceInterface $productService
+        ProductServiceInterface $productService,
+        OrderServiceInterface $orderService
     ) {
         $this->flashBag = $flashBag;
         $this->entityManager = $entityManager;
         $this->manager = $manager;
         $this->productService = $productService;
+        $this->orderService = $orderService;
     }
 
     public function addToCart(Product $product, User $user): bool
@@ -48,9 +48,9 @@ class CartService implements CartServiceInterface
     public function getCartTotal(User $user): float
     {
         return array_reduce($user->getCart()->toArray(), function ($sum, Product $product) {
-            $sum += $product->getPrice();
-            return $sum;
-        }) ?? 0;
+                $sum += $product->getPrice();
+                return $sum;
+            }) ?? 0;
     }
 
 
@@ -72,6 +72,15 @@ class CartService implements CartServiceInterface
     public function checkoutCart(User $user): bool
     {
         $cartProducts = $user->getCart();
+        $cartTotal = $this->getCartTotal($user);
+
+        if (count($cartProducts) === 0) {
+            $this->flashBag
+                ->add('danger',
+                    "Cart is empty!");
+            return false;
+        }
+
         if (!$this->productService->isProductsInStock($cartProducts)) {
             $this->flashBag
                 ->add('danger',
@@ -79,18 +88,23 @@ class CartService implements CartServiceInterface
             return false;
         }
 
-        $userMoney = $user->getMoney();
-        if ($userMoney < $this->getCartTotal($user)) {
+        if ($user->getMoney() < $cartTotal) {
             $this->flashBag
                 ->add('danger',
                     "You don't have enough money to complete your order!");
             return false;
         }
 
-        foreach ($cartProducts as $product)
-        {
+        $orderedProducts = [];
+        foreach ($cartProducts as $product) {
             $product->setQuantity($product->getQuantity() - 1);
+            $user->setMoney($user->getMoney() - $product->getPrice());
             $user->getCart()->removeElement($product);
+            $orderedProducts[$product->getId()] = [
+                "image" => $product->getImageName(),
+                "name" => $product->getName()
+            ];
+
             /**
              * @var User $seller
              */
@@ -98,7 +112,10 @@ class CartService implements CartServiceInterface
             $seller->setMoney($seller->getMoney() + $product->getPrice());
         }
 
+        $order = $this->orderService->createOrder($user, $orderedProducts, $cartTotal);
+        $this->entityManager->persist($order);
         $this->entityManager->flush();
+
         $this->flashBag
             ->add('success',
                 "Order successful!");

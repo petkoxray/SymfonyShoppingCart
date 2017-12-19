@@ -33,13 +33,13 @@
                             <ul class="dropdown-menu">
                                 <li><a href="{{ path('user_profile') }}"><span class="fa fa-user"> My Profile</span></a>
                                 </li>
+                                <li><a href="{{ path('user_orders') }}"><span class="fa fa-user"> My Orders</span></a>
+                                </li>
                                 <li><a href="#"><span class="fa fa-folder-open-o"> My products</span></a></li>
                                 <li><a href="{{ path('security_logout') }}"><span class="fa fa-sign-out"> Logout</span></a>
                                 </li>
                             </ul>
-                        <li><a href="{{ path('cart_show') }}"><span
-                                        class="fa fa-shopping-cart"> Cart({{ app.user.cart|length }}
-                                    products)</span></a></li>
+                        <li><a href="{{ path('cart_show') }}"><span class="fa fa-shopping-cart"> Cart({{ app.user.cart|length }} products)</span></a></li>
                     {% endblock %}
                 {% else %}
                     {% block navbar_guest %}

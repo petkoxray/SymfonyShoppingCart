@@ -1,37 +1,3 @@
-ShoppingCartBundle\Entity\Category:
-    Category_1:
-        name: Books
-    Category_2:
-        name: Games
-    Category_3:
-        name: Computers
-    Category_4:
-        name: Laptops
-    Category_5:
-        name: Phones
-    Category_6:
-        name: Video
-    Category_7:
-        name: Audio
-    Category_8:
-        name: Others
-    Category_9:
-        name: Drones
-    Category_10:
-        name: "Washing Machines"
-    Category_11:
-        name: Toys
-
-ShoppingCartBundle\Entity\Product:
-    product_{1..50}:
-        name: <firstname()> <lastName()>
-        description: <paragraph()>
-        imageName: "img<numberBetween(1, 16)>.jpg"
-        quantity: <numberBetween(0, 299)>
-        price: <randomFloat(2, 0.99, 499)>
-        category: '@Category_*'
-        createdAt: <datetime()>
-
 ShoppingCartBundle\Entity\Role:
     role_1:
         __construct: false
@@ -68,6 +34,42 @@ ShoppingCartBundle\Entity\User:
         plainPassword: 123
         money: <randomFloat(2, 200, 1000)>
         roles: ["@role_1"]
+
+ShoppingCartBundle\Entity\Category:
+    Category_1:
+        name: Books
+    Category_2:
+        name: Games
+    Category_3:
+        name: Computers
+    Category_4:
+        name: Laptops
+    Category_5:
+        name: Phones
+    Category_6:
+        name: Video
+    Category_7:
+        name: Audio
+    Category_8:
+        name: Others
+    Category_9:
+        name: Drones
+    Category_10:
+        name: "Washing Machines"
+    Category_11:
+        name: Toys
+
+ShoppingCartBundle\Entity\Product:
+    product_{1..50}:
+        name: <firstname()> <lastName()>
+        description: <paragraph()>
+        imageName: "img<numberBetween(1, 16)>.jpg"
+        quantity: <numberBetween(0, 299)>
+        price: <randomFloat(2, 0.99, 499)>
+        category: '@Category_*'
+        seller: '@user_1'
+        isListed: true
+        createdAt: <datetime()>
 
 ShoppingCartBundle\Entity\Review:
     review_{1..100}:

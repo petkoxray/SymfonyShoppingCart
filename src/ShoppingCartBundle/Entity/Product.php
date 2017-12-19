@@ -92,6 +92,13 @@ class Product
     private $slug;
 
     /**
+     * @var bool $isListed
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $isListed;
+
+    /**
      * @var Review[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="ShoppingCartBundle\Entity\Review", mappedBy="product")
@@ -134,6 +141,7 @@ class Product
         $this->reviews = new ArrayCollection();
         $this->promotions = new ArrayCollection();
         $this->createdAt = new \DateTime();
+        $this->isListed = true;
     }
 
     /**
@@ -243,6 +251,22 @@ class Product
     public function setSlug($slug)
     {
         $this->slug = $slug;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isListed()
+    {
+        return $this->isListed;
+    }
+
+    /**
+     * @param bool $isListed
+     */
+    public function setIsListed($isListed)
+    {
+        $this->isListed = $isListed;
     }
 
     /**

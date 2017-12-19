@@ -97,17 +97,27 @@ class User implements UserInterface, AdvancedUserInterface
     private $myProducts;
 
     /**
-     * @var ArrayCollection|Product
+     * @var ArrayCollection|Product[]
      *
      * @ORM\ManyToMany(targetEntity="ShoppingCartBundle\Entity\Product", inversedBy="userCart")
      * @ORM\JoinTable(name="users_carts")
      */
     private $cart;
 
+    /**
+     * @var Order[]|ArrayCollection $orders
+     *
+     * @ORM\OneToMany(targetEntity="ShoppingCartBundle\Entity\Order", mappedBy="user")
+     * @ORM\OrderBy({"createdAt":"desc"})
+     */
+    private $orders;
+
     public function __construct()
     {
         $this->roles = new ArrayCollection();
         $this->reviews = new ArrayCollection();
+        $this->orders = new ArrayCollection();
+
         $this->isBanned = false;
         $this->money = self::INITIAL_MONEY;
     }
@@ -333,6 +343,22 @@ class User implements UserInterface, AdvancedUserInterface
     public function setMyProducts($myProducts)
     {
         $this->myProducts = $myProducts;
+    }
+
+    /**
+     * @return ArrayCollection|Order[]
+     */
+    public function getOrders()
+    {
+        return $this->orders;
+    }
+
+    /**
+     * @param ArrayCollection|Order[] $orders
+     */
+    public function setOrders($orders)
+    {
+        $this->orders = $orders;
     }
 
     /**

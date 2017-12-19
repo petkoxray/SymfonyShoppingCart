@@ -13,6 +13,10 @@ services:
         tags:
             - { name: doctrine.event_subscriber }
 
+    Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface:
+        alias: 'session.flash_bag'
+        public: false
+
     ShoppingCartBundle\Service\ReviewServiceInterface:
         alias: 'ShoppingCartBundle\Service\ReviewService'
         public: false
@@ -25,10 +29,10 @@ services:
         alias: 'ShoppingCartBundle\Service\CartService'
         public: false
 
-    Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface:
-        alias: 'session.flash_bag'
-        public: false
-
     ShoppingCartBundle\Service\ProductServiceInterface:
         alias: 'ShoppingCartBundle\Service\ProductService'
+        public: false
+
+    ShoppingCartBundle\Service\OrderServiceInterface:
+        alias: 'ShoppingCartBundle\Service\OrderService'
         public: false
