@@ -1,0 +1,12 @@
+{% extends "@ShoppingCart/base.html.twig" %}
+
+{% block body %}
+    {% for order in orders %}
+        <div class="panel panel-info">
+            {% include "@ShoppingCart/orders/_order.html.twig" %}
+        </div>
+    {% endfor %}
+    <div class="navigation text-center">
+        {{ knp_pagination_render(orders) }}
+    </div>
+{% endblock %}

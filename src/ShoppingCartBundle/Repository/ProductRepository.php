@@ -5,6 +5,7 @@ namespace ShoppingCartBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use ShoppingCartBundle\Entity\Category;
+use ShoppingCartBundle\Entity\User;
 
 class ProductRepository extends EntityRepository
 {
@@ -35,5 +36,13 @@ class ProductRepository extends EntityRepository
             ->andWhere("product.category = :category")
             ->orderBy("product.id", "desc")
             ->setParameter("category", $category);
+    }
+
+    public function findProductsByUserByQueryBuilder(User $user): QueryBuilder
+    {
+        return $this->createQueryBuilder("product")
+            ->andWhere("product.seller = :user")
+            ->setParameter("user", $user)
+            ->orderBy("product.createdAt", "desc");
     }
 }

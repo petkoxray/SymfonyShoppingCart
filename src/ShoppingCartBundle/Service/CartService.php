@@ -81,7 +81,7 @@ class CartService implements CartServiceInterface
             return false;
         }
 
-        if (!$this->productService->isProductsInStock($cartProducts)) {
+        if (!$this->productService->isProductsAvailable($cartProducts)) {
             $this->flashBag
                 ->add('danger',
                     "Some products are out of stock! Please remove them to proceed!");
@@ -100,10 +100,7 @@ class CartService implements CartServiceInterface
             $product->setQuantity($product->getQuantity() - 1);
             $user->setMoney($user->getMoney() - $product->getPrice());
             $user->getCart()->removeElement($product);
-            $orderedProducts[$product->getId()] = [
-                "image" => $product->getImageName(),
-                "name" => $product->getName()
-            ];
+            $orderedProducts[$product->getSlug()] = $product->getName();
 
             /**
              * @var User $seller

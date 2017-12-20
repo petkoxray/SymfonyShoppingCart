@@ -1,0 +1,55 @@
+{% extends '@ShoppingCart/base.html.twig' %}
+
+{% block body %}
+    <h1>All users orders</h1>
+    <hr>
+    <div class="container">
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>#id</th>
+                        <th>Products Name</th>
+                        <th>Email</th>
+                        <th>Date</th>
+                        <th>Total Price</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for order in orders %}
+                        <td>#{{ order.id }} </td>
+                        <td>
+                                <ul>
+                                    {% for slug, product in order.products %}
+                                    <a href="{{ path('product_show', {'slug': slug}) }}">
+                                        <li>{{ product }} </li>
+                                    </a>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                        <td>{{ order.user.email }} </td>
+                        <td>{{ order.createdAt|date }} </td>
+                        <td>{{ order.total }} </td>
+                        <td>
+                            {% if order.isCompleted %}
+                                <span class="label label-success">Completed</span>
+                            {% else %}
+                                <form method="post" action="{{ path('admin_order_complete  ', {'id': order.id}) }}">
+                                    <p class="label label-info">Processing</p> /
+                                    <button class="btn btn-success btn-xs" type="submit">Complete order</button>
+                                </form>
+                            {% endif %}
+                        </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="navigation text-center">
+            {{ knp_pagination_render(orders) }}
+        </div>
+    </div>
+{% endblock %}

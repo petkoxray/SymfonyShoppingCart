@@ -17,7 +17,13 @@ class OrderRepository extends EntityRepository
             ->orderBy("users_orders.createdAt", "desc");
     }
 
-    public function findByQueryBuilder()
+    public function findAllByQueryBuilder(): QueryBuilder
+    {
+        return $this->createQueryBuilder('users_orders')
+            ->orderBy("users_orders.createdAt", "desc");
+    }
+
+    public function findByQueryBuilder(): QueryBuilder
     {
         return $this->createQueryBuilder('users_orders');
     }

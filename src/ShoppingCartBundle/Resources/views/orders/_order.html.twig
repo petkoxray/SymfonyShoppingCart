@@ -1,0 +1,26 @@
+<div class="panel-heading">Order #: {{ order.id }} created on {{ order.createdAt|date }}</div>
+<div class="panel-body">
+    <label class="label label-{{ order.completed ? "success" : "warning" }}">
+        Status: {{ order.completed ? "Complted" : "Pending" }}
+    </label>
+    <h3 class="h4">Products:</h3>
+    <table class="table-responsive table table-bordered">
+        <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for key,product in order.products %}
+            <tr>
+                <td>{{ product }}</td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td class="text-left" colspan="2">
+                <strong>Total: €{{ order.total }}</strong>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

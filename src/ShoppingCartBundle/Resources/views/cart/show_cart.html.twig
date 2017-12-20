@@ -44,14 +44,10 @@
                                 <div class="col-xs-6 text-right">
                                     <h5><strong>€{{ product.price|number_format(2) }} </strong> x </h5>
                                 </div>
-                                <div class="col-xs-4">
-                                    <input form="cartUpdateForm" type="text" name="{{ product.slug }}"
-                                           class="form-control input-sm" value="1">
-                                </div>
                                 <div class="col-xs-2">
                                     <form method="post" action="{{ path("cart_remove", {"slug": product.slug}) }}">
                                         <button class="btn btn-danger btn-xs"
-                                                role="button"><i class="fa fa-trash" aria-hidden="true"></i>
+                                                role="button"><i class="fa fa-trash" aria-hidden="true">Remove</i>
                                         </button>
                                     </form>
                                 </div>

@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use ShoppingCartBundle\Entity\Order;
+use ShoppingCartBundle\Entity\Product;
 use ShoppingCartBundle\Form\ProfileEditForm;
 use ShoppingCartBundle\Form\RegisterForm;
 use ShoppingCartBundle\Entity\Role;
@@ -17,6 +18,13 @@ use ShoppingCartBundle\Entity\User;
 
 class UserController extends Controller
 {
+    private $paginator;
+
+    public function __construct(PaginatorInterface $paginator)
+    {
+        $this->paginator = $paginator;
+    }
+
     /**
      * @Route("/register", name="user_register")
      * @Method("GET")
@@ -129,19 +137,18 @@ class UserController extends Controller
      *
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @param Request $request
-     * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function userOrdersAction(Request $request, PaginatorInterface $paginator): Response
+    public function userOrdersAction(Request $request): Response
     {
-        $orders = $paginator->paginate(
+        $orders = $this->paginator->paginate(
             $this->getDoctrine()->getRepository(Order::class)
                 ->findOrdersByUserQueryBuilder($this->getUser()),
             $request->query->getInt('page', 1),
-            5
+            3
         );
 
-        return $this->render("@ShoppingCart/users/orders.html.twig", [
+        return $this->render("@ShoppingCart/orders/orders.html.twig", [
             "orders" => $orders
         ]);
     }

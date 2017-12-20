@@ -12,10 +12,13 @@ class ProductService implements ProductServiceInterface
      * @param ArrayCollection|Product $products
      * @return bool
      */
-    public function isProductsInStock($products): bool
+    public function isProductsAvailable($products): bool
     {
+        /**
+         * @var Product $product
+         */
         foreach ($products as $product) {
-            if (!$product->isInStock()) {
+            if (!$product->isInStock() || !$product->isListed()) {
                 return false;
             }
         }

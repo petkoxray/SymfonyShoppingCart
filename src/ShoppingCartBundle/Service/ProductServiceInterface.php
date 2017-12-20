@@ -17,5 +17,5 @@ interface ProductServiceInterface
      * @param Product[]
      * @return bool
      */
-    public function isProductsInStock($products): bool;
+    public function isProductsAvailable($products): bool;
 }
