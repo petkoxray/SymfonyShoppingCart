@@ -9,6 +9,8 @@
                         href="{{ path("show_products_by_category", {"slug": product.category.slug}) }}">{{ product.category.name }}</a>
             </p>
             <p>In stock: <strong>{{ product.quantity }}</strong></p>
+            <p>Selled by:<a class="deco-none" href="{{ path('user_shop', {'id': product.seller.id}) }}">
+                     <strong>{{ product.seller.fullname }}</strong></a></p>
             <div class="h2">
                 Price:
                 {% if product.hasActivePromotion %}
@@ -18,6 +20,11 @@
                     <span class="label label-success">€{{ product.price }}</span>
                 {% endif %}
             </div>
+            <hr>
+            <form method="post" style="display: inline-block">
+                <a href="{{ path("cart_add", {"slug": product.slug}) }}" class="btn btn-primary"
+                   role="button"><i class="fa fa-cart-plus" aria-hidden="true"> Add to Cart</i></a>
+            </form>
             <hr>
         </div>
         <div class="col-md-5">

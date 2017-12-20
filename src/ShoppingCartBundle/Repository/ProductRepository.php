@@ -42,6 +42,7 @@ class ProductRepository extends EntityRepository
     {
         return $this->createQueryBuilder("product")
             ->andWhere("product.seller = :user")
+            ->andWhere("product.quantity > 0")
             ->setParameter("user", $user)
             ->orderBy("product.createdAt", "desc");
     }

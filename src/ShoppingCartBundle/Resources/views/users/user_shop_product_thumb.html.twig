@@ -1,23 +1,17 @@
 <div class="col-sm-6 col-md-4">
-    <div class="thumbnail {{ product.hasActivePromotion ?  "promo" : '' }} fixed-div">
+    <div class="thumbnail fixed-div">
         <h3 class="text-center">{{ product.name }}</h3>
         <img class="img-thumbnail center-block fixed-image" src="{{ vich_uploader_asset(product, "imageFile") }}"
              alt="{{ product.name }}">
         <div class="caption">
             <div class="text-center">
                 {{ product.averageRating|starsRating|raw }}
-                <h5 class="label-info"><a class="deco-none" href="{{ path('user_shop', {'id': product.seller.id}) }}">
-                        Selled by: {{ product.seller.fullname }}</a></h5>
+                <h5 class="label-info">Selled by: {{ product.seller.fullname }}</h5>
             </div>
             <hr>
             <p><strong>Quantity available: {{ product.quantity }}</strong></p>
             <div class="h3">
-                {% if product.hasActivePromotion %}
-                    <span class="label label-success"><s>€{{ product.originalPrice|number_format(2) }}</s></span>
-                    <span class="label label-info">€{{ product.price|number_format(2) }}</span>
-                {% else %}
-                    <span class="label label-success">€{{ product.originalPrice|number_format(2) }}</span>
-                {% endif %}
+                <span class="label label-info">€{{ product.price|number_format(2) }}</span>
             </div>
             <hr>
             <p class="text">

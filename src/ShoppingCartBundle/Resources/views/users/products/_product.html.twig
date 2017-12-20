@@ -7,7 +7,7 @@
             <hr>
             <p class="text">
                 {% if product.isListed %}
-            <form method="post" action="{{ path("user_sell_product", {"slug": product.slug}) }}"
+            <form method="post" action="{{ path("user_unsell_product", {"slug": product.slug}) }}"
                   style="display: inline-block">
                 <button href="" class="btn btn-success"
                 ><i class="fa fa-cart-plus" aria-hidden="true"> Remove from sale</i></button>
@@ -19,7 +19,7 @@
                     ><i class="fa fa-cart-plus" aria-hidden="true"> Put for sale</i></button>
                 </form>
             {% endif %}
-            <a href="{{ path("product_show", {"slug": product.slug}) }}" class="btn btn-info"
+            <a href="{{ path("user_product_edit", {"slug": product.slug}) }}" class="btn btn-info"
                role="button"><i class="fa fa-info" aria-hidden="true"> Edit</i>
             </a>
         </div>

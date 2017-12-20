@@ -1,0 +1,16 @@
+{% extends '@ShoppingCart/base.html.twig' %}
+
+{% block body %}
+    <h2 class="text-center">Welcome to {{ seller.fullName }} shop!</h2>
+    <hr>
+    {% if products|length > 0 %}
+        {% for product in products %}
+            {% include '@ShoppingCart/users/user_shop_product_thumb.html.twig' %}
+        {% endfor %}
+        <div class="navigation text-center">
+            {{ knp_pagination_render(products) }}
+        </div>
+    {% else %}
+        <h3>This user has no products for sale at this moment :(</h3>
+    {% endif %}
+{% endblock %}
