@@ -59,7 +59,7 @@ class ProductsController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $product = $form->getData();
             $shopOwner = $this->getDoctrine()->getRepository(User::class)
-                ->findOneBy(["email" => "admin@petkoxray.eu"]);
+                ->findOneBy(["email" => User::SHOP_ADMIN_EMAIL]);
             $product->setSeller($shopOwner);
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);

@@ -90,7 +90,6 @@ class PromotionsController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $promotion = $form->getData();
             $em = $this->getDoctrine()->getManager();
             $em->flush();
 
@@ -168,5 +167,17 @@ class PromotionsController extends Controller
         return $this->render('@ShoppingCart/admin/promotions/add-promotion-to-all-products.html.twig', [
             "add_form" => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/promotions/delete-all-expired",
+     *     name ="admin_promotions_delete_all_expired")
+     *
+     * @return Response
+     */
+    public function deleteExpiredPromotionsAction(): Response
+    {
+        $this->promotionService->deleteExpiredPromotions();
+        return $this->redirectToRoute('admin_promotions_all');
     }
 }

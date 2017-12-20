@@ -108,7 +108,7 @@ class Product
     /**
      * @var Promotion[]|ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="ShoppingCartBundle\Entity\Promotion")
+     * @ORM\ManyToMany(targetEntity="ShoppingCartBundle\Entity\Promotion", inversedBy="products")
      * @ORM\JoinTable(name="product_promotions")
      * @ORM\OrderBy({"discount" = "DESC"})
      */

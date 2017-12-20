@@ -31,7 +31,7 @@ ShoppingCartBundle\Entity\User:
     user_{4..11}:
         email: <email()>
         fullName: <name()>
-        plainPassword: 123
+        plainPassword: test
         money: <randomFloat(2, 200, 1000)>
         roles: ["@role_1"]
 

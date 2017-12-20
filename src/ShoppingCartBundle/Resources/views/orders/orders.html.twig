@@ -1,12 +1,16 @@
 {% extends "@ShoppingCart/base.html.twig" %}
 
 {% block body %}
-    {% for order in orders %}
-        <div class="panel panel-info">
-            {% include "@ShoppingCart/orders/_order.html.twig" %}
+    {% if orders|length > 0 %}
+        {% for order in orders %}
+            <div class="panel panel-info">
+                {% include "@ShoppingCart/orders/_order.html.twig" %}
+            </div>
+        {% endfor %}
+        <div class="navigation text-center">
+            {{ knp_pagination_render(orders) }}
         </div>
-    {% endfor %}
-    <div class="navigation text-center">
-        {{ knp_pagination_render(orders) }}
-    </div>
+    {% else %}
+        <h1>You don't have any orders yet :(</h1>
+    {% endif %}
 {% endblock %}

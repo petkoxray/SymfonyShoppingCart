@@ -69,21 +69,6 @@ class CartController extends Controller
         return $this->redirectToRoute('cart_show');
     }
 
-//    /**
-//     * @Route("/checkout", name="cart_update")
-//     *
-//     * @return Response
-//     */
-//    public function updateCartAction(Request $request): Response
-//    {
-//        $cart = $this->get('session')->set('cart', []);
-//        foreach ($request->request->all() as $product => $quantity) {
-//            $cart[$product] = $quantity;
-//        }
-//
-//        return $this->redirectToRoute("homepage");
-//    }
-
     /**
      * @Route("/checkout", name="cart_checkout")
      *

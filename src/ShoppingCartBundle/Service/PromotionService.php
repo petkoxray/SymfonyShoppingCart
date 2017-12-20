@@ -7,6 +7,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 use ShoppingCartBundle\Entity\Category;
 use ShoppingCartBundle\Entity\Promotion;
+use ShoppingCartBundle\Entity\User;
 use ShoppingCartBundle\Repository\PromotionRepository;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
@@ -35,6 +36,11 @@ class PromotionService implements PromotionServiceInterface
             if ($product->getPromotions()->contains($promotion)) {
                 continue;
             }
+
+            if ($product->getSeller()->getEmail() !== User::SHOP_ADMIN_EMAIL) {
+                continue;
+            }
+
             $product->addPromotion($promotion);
         }
 
@@ -53,6 +59,10 @@ class PromotionService implements PromotionServiceInterface
                 continue;
             }
 
+            if ($product->getSeller()->getEmail() !== User::SHOP_ADMIN_EMAIL) {
+                continue;
+            }
+
             $product->addPromotion($promotion);
         }
 
@@ -61,8 +71,15 @@ class PromotionService implements PromotionServiceInterface
         $this->entityManager->flush();
     }
 
-    public function removeExpiredPromotionsFromProducts(): void
+    public function deleteExpiredPromotions(): void
     {
+        $expiredPromotions = $this->promotionRepository->findAllExpiredPromotions();
+        foreach ($expiredPromotions as $promotion) {
+            $this->entityManager->remove($promotion);
+        }
 
+        $this->entityManager->flush();
+        $this->flashBag->add('success',
+            "All expired promotions deleted!");
     }
 }

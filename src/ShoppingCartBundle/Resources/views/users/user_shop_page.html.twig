@@ -4,9 +4,15 @@
     <h2 class="text-center">Welcome to {{ seller.fullName }} shop!</h2>
     <hr>
     {% if products|length > 0 %}
-        {% for product in products %}
+        <div class="row">
+        {% for index, product in products %}
+            {% if index % 3 == 0 and index > 0 %}
+                </div>
+                <div class="row">
+            {% endif %}
             {% include '@ShoppingCart/users/user_shop_product_thumb.html.twig' %}
         {% endfor %}
+        </div>
         <div class="navigation text-center">
             {{ knp_pagination_render(products) }}
         </div>

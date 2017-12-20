@@ -12,6 +12,13 @@
             <i
                     class="fa fa-plus-circle" aria-hidden="true"></i></a>
     </p>
+    <div class="text-center">
+        <form method="post" action="{{ path('admin_promotions_delete_all_expired') }}">
+            <button type="submit" class="btn btn-danger fa fa-trash">
+                Delete All Expired Promotions
+            </button>
+        </form>
+    </div>
     <hr>
     <table class="table table-responsive table-striped">
         <thead>

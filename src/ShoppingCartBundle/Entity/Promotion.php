@@ -2,6 +2,7 @@
 
 namespace ShoppingCartBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -61,6 +62,13 @@ class Promotion
      * @Assert\Date()
      */
     private $endDate;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="ShoppingCartBundle\Entity\Product", mappedBy="promotions", fetch="EXTRA_LAZY")
+     */
+    private $products;
 
     /**
      * @return int

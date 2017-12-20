@@ -37,6 +37,11 @@ class CartService implements CartServiceInterface
             return false;
         }
 
+        if ($product->getSeller() === $user) {
+            $this->flashBag->add('danger', 'You can\'t add your own product to the cart!');
+            return false;
+        }
+
         $user->getCart()->add($product);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
@@ -115,7 +120,7 @@ class CartService implements CartServiceInterface
 
         $this->flashBag
             ->add('success',
-                "Order successful!");
+                "Order has been received!");
         return true;
     }
 }

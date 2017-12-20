@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class User implements UserInterface, AdvancedUserInterface
 {
     CONST INITIAL_MONEY = 2499;
+    CONST SHOP_ADMIN_EMAIL= "shop@petkoxray.eu";
 
     /**
      * @var int $id
