@@ -1,20 +1,22 @@
 {% extends "@ShoppingCart/base.html.twig" %}
 
 {% block body %}
+    <div class="container body-content span=8 offset=2">
+        <div class="well">
+            {{ form_start(register_form) }}
 
-    {{ form_start(register_form) }}
+            {{ form_row(register_form.email) }}
+            {{ form_row(register_form.fullName) }}
+            {{ form_row(register_form.plainPassword.first, {
+                label: "Password"
+            }) }}
+            {{ form_row(register_form.plainPassword.second, {
+                label: "Repeat Password"
+            }) }}
 
-    {{ form_row(register_form.email) }}
-    {{ form_row(register_form.fullName) }}
-    {{ form_row(register_form.plainPassword.first, {
-        label: "Password"
-    }) }}
-    {{ form_row(register_form.plainPassword.second, {
-        label: "Repeat Password"
-    }) }}
+            <button class="btn btn-primary fa fa-thumbs-up" formnovalidate>Register</button>
 
-    <button class="btn btn-primary fa fa-thumbs-up" formnovalidate>Register</button>
-
-    {{ form_end(register_form) }}
-
+            {{ form_end(register_form) }}
+        </div>
+    </div>
 {% endblock %}

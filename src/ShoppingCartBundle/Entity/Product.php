@@ -141,7 +141,6 @@ class Product
         $this->reviews = new ArrayCollection();
         $this->promotions = new ArrayCollection();
         $this->createdAt = new \DateTime();
-        $this->isListed = true;
     }
 
     /**

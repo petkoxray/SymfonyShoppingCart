@@ -5,6 +5,7 @@ namespace ShoppingCartBundle\Form;
 use ShoppingCartBundle\Entity\Product;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -25,6 +26,13 @@ class ProductAddEditForm extends AbstractType
             ])
             ->add("quantity")
             ->add("price", MoneyType::class)
+            ->add("isListed",  ChoiceType::class, [
+                'choices' => [
+                    'Yes' => true,
+                    'No' => false
+                ],
+                'label' => 'Is product listed in the shop?',
+                'required' => true])
             ->add("promotions", EntityType::class, [
                 "class" => 'ShoppingCartBundle\Entity\Promotion',
                 "multiple" => true,

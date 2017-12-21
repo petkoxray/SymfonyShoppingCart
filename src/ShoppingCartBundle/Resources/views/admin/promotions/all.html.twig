@@ -8,17 +8,21 @@
         <a href="{{ path("admin_promotions_apply_to_category") }}" class="btn btn-success">Apply Promotion to Category
             <i
                     class="fa fa-plus-circle" aria-hidden="true"></i></a>
-        <a href="{{ path("admin_promotions_apply_to_all_products") }}" class="btn btn-success">Apply Promotion to All Products
+        <a href="{{ path("admin_promotions_apply_to_all_products") }}" class="btn btn-success">Apply Promotion to All
+            Products
             <i
-                    class="fa fa-plus-circle" aria-hidden="true"></i></a>
+                    class="fa fa-plus-circle" aria-hidden="true"></i></a></p>
+    <p class="text-center">
+    <form method="post">
+        <a href="{{ path('admin_promotions_delete_all_expired') }}" type="submit" role="button"
+           class="btn btn-danger fa fa-trash">
+            Delete All Expired Promotions
+        </a>
+        <a href="{{ path('admin_promotions_expired_remove_from_products') }}" type="submit" role="button"
+           class="btn btn-danger fa fa-trash">
+            Remove Expired Promotions From Products
+        </a></form>
     </p>
-    <div class="text-center">
-        <form method="post" action="{{ path('admin_promotions_delete_all_expired') }}">
-            <button type="submit" class="btn btn-danger fa fa-trash">
-                Delete All Expired Promotions
-            </button>
-        </form>
-    </div>
     <hr>
     <table class="table table-responsive table-striped">
         <thead>

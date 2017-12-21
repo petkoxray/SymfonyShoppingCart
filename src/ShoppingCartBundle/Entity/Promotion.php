@@ -143,6 +143,22 @@ class Promotion
     }
 
     /**
+     * @return ArrayCollection
+     */
+    public function getProducts()
+    {
+        return $this->products;
+    }
+
+    /**
+     * @param ArrayCollection $products
+     */
+    public function setProducts($products)
+    {
+        $this->products = $products;
+    }
+
+    /**
      * @return  bool
      */
     public function isActive()

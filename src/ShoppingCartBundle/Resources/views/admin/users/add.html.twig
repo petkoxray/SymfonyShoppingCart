@@ -1,22 +1,24 @@
 {% extends "@ShoppingCart/base.html.twig" %}
 
 {% block body %}
+    <div class="container body-content span=8 offset=2">
+        <div class="well">
+            {{ form_start(add_form) }}
 
-    {{ form_start(add_form) }}
+            {{ form_row(add_form.email) }}
+            {{ form_row(add_form.fullName) }}
+            {{ form_row(add_form.money) }}
+            {{ form_row(add_form.plainPassword.first, {
+                label: "Password"
+            }) }}
+            {{ form_row(add_form.plainPassword.second, {
+                label: "Confirm Password"
+            }) }}
+            {{ form_row(add_form.roles) }}
+            {{ form_row(add_form.isBanned) }}
+            <button class="btn btn-success pull-right fa fa-thumbs-up" formnovalidate>Add User</button>
 
-    {{ form_row(add_form.email) }}
-    {{ form_row(add_form.fullName) }}
-    {{ form_row(add_form.money) }}
-    {{ form_row(add_form.plainPassword.first, {
-        label: "Password"
-    }) }}
-    {{ form_row(add_form.plainPassword.second, {
-        label: "Confirm Password"
-    }) }}
-    {{ form_row(add_form.roles) }}
-    {{ form_row(add_form.isBanned)}}
-    <button class="btn btn-success pull-right fa fa-thumbs-up" formnovalidate>Add User</button>
-
-    {{ form_end(add_form) }}
-
+            {{ form_end(add_form) }}
+        </div>
+    </div>
 {% endblock %}

@@ -42,7 +42,7 @@ class ProductController extends Controller
     {
         $products = $paginator->paginate(
             $this->getDoctrine()->getRepository(Product::class)
-                ->findAllByQueryBuilder(),
+                ->findAllAvailableByQueryBuilder(),
             $request->query->getInt('page', 1),
             9
         );

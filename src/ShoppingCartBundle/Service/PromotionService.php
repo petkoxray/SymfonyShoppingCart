@@ -6,6 +6,7 @@ namespace ShoppingCartBundle\Service;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 use ShoppingCartBundle\Entity\Category;
+use ShoppingCartBundle\Entity\Product;
 use ShoppingCartBundle\Entity\Promotion;
 use ShoppingCartBundle\Entity\User;
 use ShoppingCartBundle\Repository\PromotionRepository;
@@ -81,5 +82,23 @@ class PromotionService implements PromotionServiceInterface
         $this->entityManager->flush();
         $this->flashBag->add('success',
             "All expired promotions deleted!");
+    }
+
+    public function removeExpiredPromotionsFromProducts()
+    {
+        $expiredPromotions = $this->promotionRepository->findAllExpiredPromotions();
+        /**
+         * @var Promotion $promotion
+         */
+        foreach ($expiredPromotions as $promotion) {
+            foreach ($promotion->getProducts() as $product) {
+                /**
+                 * @var Product $product
+                 */
+                $product->removePromotion($promotion);
+            }
+        }
+
+        $this->entityManager->flush();
     }
 }

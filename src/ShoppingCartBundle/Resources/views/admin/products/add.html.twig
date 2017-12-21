@@ -1,19 +1,24 @@
 {% extends "@ShoppingCart/base.html.twig" %}
 
 {% block body %}
-    {{ form_start(add_form) }}
+    <div class="container body-content span=8 offset=2">
+        <div class="well">
+            {{ form_start(add_form) }}
 
-    {{ form_row(add_form.name) }}
-    {{ form_row(add_form.description) }}
-    {{ form_row(add_form.category) }}
-    {{ form_row(add_form.imageFile) }}
-    {{ form_row(add_form.quantity) }}
-    {{ form_row(add_form.price) }}
-    {{ form_row(add_form.promotions) }}
+            {{ form_row(add_form.name) }}
+            {{ form_row(add_form.description) }}
+            {{ form_row(add_form.category) }}
+            {{ form_row(add_form.imageFile) }}
+            {{ form_row(add_form.quantity) }}
+            {{ form_row(add_form.price) }}
+            {{ form_row(add_form.isListed) }}
+            {{ form_row(add_form.promotions) }}
 
-    <button class="btn btn-success" formnovalidate>Add <i
-                class="fa fa-plus-circle" aria-hidden="true"></i>
-    </button>
+            <button class="btn btn-success" formnovalidate>Add <i
+                        class="fa fa-plus-circle" aria-hidden="true"></i>
+            </button>
 
-    {{ form_end(add_form) }}
+            {{ form_end(add_form) }}
+        </div>
+    </div>
 {% endblock %}

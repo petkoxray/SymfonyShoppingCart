@@ -180,4 +180,16 @@ class PromotionsController extends Controller
         $this->promotionService->deleteExpiredPromotions();
         return $this->redirectToRoute('admin_promotions_all');
     }
+
+    /**
+     * @Route("/promotions/remove-expired-from-products",
+     *     name ="admin_promotions_expired_remove_from_products")
+     *
+     * @return Response
+     */
+    public function removeExpiredPromotionsFromProducts()
+    {
+        $this->promotionService->removeExpiredPromotionsFromProducts();
+        return $this->redirectToRoute('admin_promotions_all');
+    }
 }

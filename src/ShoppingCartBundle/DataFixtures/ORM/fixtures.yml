@@ -20,13 +20,13 @@ ShoppingCartBundle\Entity\User:
         email: editor@petkoxray.eu
         plainPassword: test
         fullName: "Editor Editorov"
-        money: <randomFloat(2, 1000, 2000)>
+        money: <randomFloat(2, 2000, 5000)>
         roles: ["@role_2", "@role_1"]
     user_3:
         email: user@petkoxray.eu
         plainPassword: test
         fullName: "User Userov"
-        money: <randomFloat(2, 500, 100)>
+        money: <randomFloat(2, 2000, 3000)>
         roles: ["@role_1"]
     user_{4..11}:
         email: <email()>
@@ -60,10 +60,10 @@ ShoppingCartBundle\Entity\Category:
         name: Toys
 
 ShoppingCartBundle\Entity\Product:
-    product_{1..50}:
+    product_{1..100}:
         name: <firstname()> <lastName()>
-        description: <paragraph()>
-        imageName: "img<numberBetween(1, 16)>.jpg"
+        description: <paragraph()> <paragraph()>
+        imageName: "img<numberBetween(1, 36)>.jpg"
         quantity: <numberBetween(0, 299)>
         price: <randomFloat(2, 0.99, 499)>
         category: '@Category_*'

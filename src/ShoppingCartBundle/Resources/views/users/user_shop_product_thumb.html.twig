@@ -9,6 +9,10 @@
                 <h5 class="label-info">Selled by: {{ product.seller.fullname }}</h5>
             </div>
             <hr>
+            <p><strong>Category</strong><a
+                        href="{{ path('show_products_by_category', {'slug': product.category.slug}) }}">
+                    {{ product.category.name }}
+                </a></p>
             <p><strong>Quantity available: {{ product.quantity }}</strong></p>
             <div class="h3">
                 <span class="label label-info">€{{ product.price|number_format(2) }}</span>

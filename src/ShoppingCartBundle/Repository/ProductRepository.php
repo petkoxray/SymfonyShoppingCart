@@ -12,6 +12,12 @@ class ProductRepository extends EntityRepository
     public function findAllByQueryBuilder(): QueryBuilder
     {
         return $this->createQueryBuilder("product")
+            ->orderBy("product.id", "desc");
+    }
+
+    public function findAllAvailableByQueryBuilder(): QueryBuilder
+    {
+        return $this->createQueryBuilder("product")
             ->andWhere("product.quantity > 0")
             ->andWhere("product.isListed = 1")
             ->orderBy("product.id", "desc");
