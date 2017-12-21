@@ -58,6 +58,13 @@ class ProductsController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $product = $form->getData();
+            if (!$product->getImageFile()) {
+                $this->addFlash('danger', 'Please upload image!');
+                return $this->render("@ShoppingCart/admin/products/add.html.twig", [
+                    "add_form" => $form->createView()
+                ]);
+            }
+
             $shopOwner = $this->getDoctrine()->getRepository(User::class)
                 ->findOneBy(["email" => User::SHOP_ADMIN_EMAIL]);
             $product->setSeller($shopOwner);

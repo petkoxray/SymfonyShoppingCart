@@ -9,5 +9,5 @@ interface OrderServiceInterface
 {
     public function createOrder(User $user,array $products, float $totalPrice );
 
-    public function completeOrder(Order $order): bool;
+    public function completeOrder(Order $order): void;
 }

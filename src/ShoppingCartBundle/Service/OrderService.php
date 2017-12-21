@@ -35,12 +35,10 @@ class OrderService implements OrderServiceInterface
         return $order;
     }
 
-    public function completeOrder(Order $order): bool
+    public function completeOrder(Order $order): void
     {
         if ($order->isCompleted()) {
             $this->flashBag->set("danger", "Order is already completed!");
-
-            return false;
         }
 
         $order->setCompleted(true);
@@ -65,7 +63,5 @@ class OrderService implements OrderServiceInterface
         $this->entityManager->flush();
         $this->flashBag->set(
             "success", "Order is completed and products are added to the user!");
-
-        return true;
     }
 }
