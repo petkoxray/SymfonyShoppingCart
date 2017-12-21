@@ -187,7 +187,7 @@ class PromotionsController extends Controller
      *
      * @return Response
      */
-    public function removeExpiredPromotionsFromProducts()
+    public function removeExpiredPromotionsFromProducts(): Response
     {
         $this->promotionService->removeExpiredPromotionsFromProducts();
         return $this->redirectToRoute('admin_promotions_all');

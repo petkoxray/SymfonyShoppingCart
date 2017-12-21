@@ -13,7 +13,7 @@
             <th>{{ knp_pagination_sortable(products, '#id', 'product.id') }}</th>
             <th>Image</th>
             <th>{{ knp_pagination_sortable(products, 'Name', 'product.name') }}</th>
-            <th>Description</th>
+            <th>Owner</th>
             <th>Category</th>
             <th>{{ knp_pagination_sortable(products, 'Quantity', 'product.quantity') }}</th>
             <th>{{ knp_pagination_sortable(products, 'Price', 'product.price') }}</th>
@@ -33,7 +33,7 @@
                             {{ product.name }}
                         </a>
                     </td>
-                    <td>{{ product.description }}</td>
+                    <td>{{ product.seller.email }}</td>
                     <td>
                         <a href="{{ path('show_products_by_category', {"slug": product.category.slug}) }}"> {{ product.category.name }}</a>
                     </td>

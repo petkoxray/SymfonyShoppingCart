@@ -35,7 +35,7 @@
                 </td>
                 <td>
                     <form action="{{ path("admin_users_delete", {"id": user.id}) }}" method="post">
-                        <button class="btn btn-danger delete-item" type="submit"><i class="fa fa-trash-o"></i>
+                        <button class="btn {{ user.myproducts|length > 0 ? 'disabled' : 'btn-danger' }}  delete-item" type="submit"><i class="fa fa-trash-o"></i>
                             Delete
                         </button>
                     </form>

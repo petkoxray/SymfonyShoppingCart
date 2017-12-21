@@ -17,7 +17,7 @@ class KernelListener
 
     public function onKernelRequest(GetResponseEvent $event)
     {
-        $bannedIps = $ids = array_map($transform = function(BannedIP $bannedIp) {
+        $bannedIps = array_map(function(BannedIP $bannedIp) {
                 return $bannedIp->getIp();
         }, $this->bannedIPRepository->findAll());
 

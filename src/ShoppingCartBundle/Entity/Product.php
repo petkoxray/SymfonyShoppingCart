@@ -79,7 +79,7 @@ class Product
      *
      * @ORM\Column(type="decimal", precision=10, scale=2)
      * @Assert\NotBlank()
-     * @Assert\Range(min="0.01")
+     * @Assert\Range(min="0.01", max="900000")
      */
     private $price;
 
@@ -136,11 +136,19 @@ class Product
      */
     private $userCart;
 
+    /**
+     * @var bool $isReseller
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $isResold;
+
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
         $this->promotions = new ArrayCollection();
         $this->createdAt = new \DateTime();
+        $this->isResold = false;
     }
 
     /**
@@ -422,6 +430,22 @@ class Product
     public function removePromotion(Promotion $promotion)
     {
         $this->promotions->removeElement($promotion);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isResold()
+    {
+        return $this->isResold;
+    }
+
+    /**
+     * @param bool $isResold
+     */
+    public function setIsResold($isResold)
+    {
+        $this->isResold = $isResold;
     }
 
     /**

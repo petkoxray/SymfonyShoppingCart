@@ -49,6 +49,7 @@ class OrderService implements OrderServiceInterface
             $product = $this->manager->getRepository(Product::class)
                 ->findOneBy(['slug' => $slug]);
             $userProduct = new Product();
+            $userProduct->setIsResold(true);
             $userProduct->setName($product->getName());
             $userProduct->setQuantity(1);
             $userProduct->setCategory($product->getCategory());

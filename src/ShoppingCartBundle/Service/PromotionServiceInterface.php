@@ -14,5 +14,5 @@ interface PromotionServiceInterface
 
     public function deleteExpiredPromotions(): void;
 
-    public function removeExpiredPromotionsFromProducts();
+    public function removeExpiredPromotionsFromProducts(): void;
 }

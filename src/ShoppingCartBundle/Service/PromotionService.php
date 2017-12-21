@@ -84,7 +84,7 @@ class PromotionService implements PromotionServiceInterface
             "All expired promotions deleted!");
     }
 
-    public function removeExpiredPromotionsFromProducts()
+    public function removeExpiredPromotionsFromProducts(): void
     {
         $expiredPromotions = $this->promotionRepository->findAllExpiredPromotions();
         /**
@@ -100,5 +100,7 @@ class PromotionService implements PromotionServiceInterface
         }
 
         $this->entityManager->flush();
+        $this->flashBag->add('success',
+            "All expired promotions removed from products!");
     }
 }

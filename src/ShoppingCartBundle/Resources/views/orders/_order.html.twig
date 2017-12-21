@@ -1,7 +1,7 @@
 <div class="panel-heading">Order #: {{ order.id }} created on {{ order.createdAt|date }}</div>
 <div class="panel-body">
     <label class="label label-{{ order.completed ? "success" : "warning" }}">
-        Status: {{ order.completed ? "Complted" : "Pending" }}
+        Status: {{ order.completed ? "Completed" : "Pending" }}
     </label>
     <h3 class="h4">Products:</h3>
     <table class="table-responsive table table-bordered">

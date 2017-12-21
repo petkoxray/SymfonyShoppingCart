@@ -30,24 +30,22 @@ class CartService implements CartServiceInterface
         $this->orderService = $orderService;
     }
 
-    public function addToCart(Product $product, User $user): bool
+    public function addToCart(Product $product, User $user): void
     {
         if ($user->getCart()->contains($product)) {
             $this->flashBag->add('danger', 'You already have this product in you cart!');
-            return false;
+            return;
         }
 
         if ($product->getSeller() === $user) {
             $this->flashBag->add('danger', 'You can\'t add your own product to the cart!');
-            return false;
+            return;
         }
 
         $user->getCart()->add($product);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
         $this->flashBag->add('success', "{$product->getName()} added to your cart!");
-
-        return true;
     }
 
     public function getCartTotal(User $user): float
@@ -59,19 +57,17 @@ class CartService implements CartServiceInterface
     }
 
 
-    public function removeFromCart(Product $product, User $user): bool
+    public function removeFromCart(Product $product, User $user): void
     {
         if (!$user->getCart()->contains($product)) {
             $this->flashBag->add('danger', 'You don\'t have this product in you cart!');
-            return false;
+            return;
         }
 
         $user->getCart()->removeElement($product);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
         $this->flashBag->add('success', "{$product->getName()} removed from your cart!");
-
-        return true;
     }
 
     public function checkoutCart(User $user): bool

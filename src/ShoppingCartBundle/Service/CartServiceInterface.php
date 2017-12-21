@@ -8,11 +8,11 @@ use ShoppingCartBundle\Entity\User;
 
 interface CartServiceInterface
 {
-    public function addToCart(Product $product, User $user): bool;
+    public function addToCart(Product $product, User $user): void;
 
     public function getCartTotal(User $user): float;
 
-    public function removeFromCart(Product $product, User $user): bool;
+    public function removeFromCart(Product $product, User $user): void;
 
     public function checkoutCart(User $user);
 }

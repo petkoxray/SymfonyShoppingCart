@@ -79,11 +79,15 @@ class UsersController extends Controller
      */
     public function deleteUserAction(User $user): Response
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($user);
-        $em->flush();
-        $this->addFlash("success", "User with username {$user->getEmail()} deleted successfully!");
-
+        if ($user->getMyProducts()->count() > 0) {
+            $this->addFlash(
+                "danger", "You cant delete user which has products! You can ban his account!");
+        } else {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($user);
+            $em->flush();
+            $this->addFlash("success", "User with username {$user->getEmail()} deleted successfully!");
+        }
         return $this->redirectToRoute('admin_users_all');
     }
 
