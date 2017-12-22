@@ -30,7 +30,7 @@ class Order
      * @var User $user
      *
      * @ORM\ManyToOne(targetEntity="ShoppingCartBundle\Entity\User", inversedBy="orders")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $user;
 
